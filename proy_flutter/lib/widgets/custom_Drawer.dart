@@ -29,7 +29,8 @@ class customDrawerW extends StatelessWidget {
                   children: [
                     CircleAvatar(
                       radius: 48, // Image radius
-                      backgroundImage: NetworkImage(''),
+                      backgroundImage: NetworkImage(
+                          'https://cdn.pixabay.com/photo/2014/11/29/19/33/bald-eagle-550804_960_720.jpg'),
                     ),
                     SizedBox(
                       width: 40,
