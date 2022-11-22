@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:proy_flutter/preferences/preferences.dart';
+import 'package:proy_flutter/providers/login_provider.dart';
 import 'package:proy_flutter/providers/theme_provider.dart';
+import 'package:proy_flutter/routes/routes.dart';
 import 'package:proy_flutter/views/home.dart';
 
 void main() async {
@@ -12,7 +14,10 @@ void main() async {
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(
-          create: (_) => ThemeProvider(isDarkMode: Preferences.theme))
+          create: (_) => ThemeProvider(isDarkMode: Preferences.theme)),
+      ChangeNotifierProvider(
+        create: (_) => LoginProvider(),
+      )
     ],
     child: const MyApp(),
   ));
@@ -27,7 +32,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Wallpaper Store',
       theme: Provider.of<ThemeProvider>(context).currentTheme,
-      home: const HomePage(),
+      onGenerateRoute: MyRoutes.generateRoute,
+      initialRoute: MyRoutes.rLogin,
+      //home: const HomePage(),
     );
   }
 }
