@@ -12,7 +12,6 @@ class loginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final prov_login = Provider.of<LoginProvider>(context);
     return Scaffold(
-      backgroundColor: Colors.black,
       body: Center(
         child: SingleChildScrollView(
           child: Column(
@@ -21,7 +20,7 @@ class loginScreen extends StatelessWidget {
               SizedBox(
                 width: 300,
                 child: Lottie.network(
-                    'https://assets6.lottiefiles.com/packages/lf20_L7YrbxFm46.json'),
+                    'https://assets3.lottiefiles.com/packages/lf20_L7YrbxFm46.json'),
               ),
               SizedBox(
                 height: 40,
@@ -78,7 +77,7 @@ class loginScreen extends StatelessWidget {
                           height: 60,
                           width: 250,
                           child: MaterialButton(
-                            color: Colors.green,
+                            color: Colors.purple,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(50),
                             ),
@@ -128,13 +127,13 @@ class loginScreen extends StatelessWidget {
   }) {
     return InputDecoration(
         enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(width: 2, color: Colors.green),
+            borderSide: BorderSide(width: 2, color: Colors.purple),
             borderRadius: BorderRadius.circular(15)),
         focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(width: 2, color: Colors.green),
+            borderSide: BorderSide(width: 2, color: Colors.purple),
             borderRadius: BorderRadius.circular(15)),
         border: OutlineInputBorder(
-          borderSide: BorderSide(width: 2, color: Colors.green),
+          borderSide: BorderSide(width: 2, color: Colors.purple),
           borderRadius: BorderRadius.circular(15),
         ),
         filled: true,

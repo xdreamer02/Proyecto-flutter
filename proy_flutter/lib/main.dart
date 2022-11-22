@@ -4,7 +4,6 @@ import 'package:proy_flutter/preferences/preferences.dart';
 import 'package:proy_flutter/providers/login_provider.dart';
 import 'package:proy_flutter/providers/theme_provider.dart';
 import 'package:proy_flutter/routes/routes.dart';
-import 'package:proy_flutter/views/home.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
