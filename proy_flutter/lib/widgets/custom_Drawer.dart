@@ -11,6 +11,7 @@ class customDrawerW extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: Colors.black,
       width: MediaQuery.of(context).size.width * 0.8,
       child: Drawer(
         child: ListView(
@@ -18,10 +19,13 @@ class customDrawerW extends StatelessWidget {
           children: [
             DrawerHeader(
               decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [Colors.red, Colors.purple, Colors.black]),
                 borderRadius: BorderRadius.only(
                     bottomRight: Radius.circular(25),
                     bottomLeft: Radius.circular(25)),
-                color: Colors.blueAccent,
               ),
               child: Center(
                 child: Row(
@@ -144,24 +148,18 @@ class customDrawerW extends StatelessWidget {
                 ),
                 ListTile(
                   leading: const Icon(
-                    Icons.settings,
+                    Icons.favorite,
                     size: 30,
                     color: Colors.grey,
                   ),
                   title: Text(
-                    'Ajustes',
+                    'Favoritos',
                     style: GoogleFonts.montserrat(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                         color: Colors.black.withOpacity(0.5)),
                   ),
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const ConfigPage(),
-                        ));
-                  },
+                  onTap: () {},
                 ),
                 ListTile(
                   leading: const Icon(
@@ -195,18 +193,24 @@ class customDrawerW extends StatelessWidget {
                 ),
                 ListTile(
                   leading: const Icon(
-                    Icons.favorite,
+                    Icons.settings,
                     size: 30,
                     color: Colors.grey,
                   ),
                   title: Text(
-                    'Favoritos',
+                    'Ajustes',
                     style: GoogleFonts.montserrat(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                         color: Colors.black.withOpacity(0.5)),
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ConfigPage(),
+                        ));
+                  },
                 ),
               ],
             )
