@@ -11,15 +11,21 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen>
     with SingleTickerProviderStateMixin {
-  static const List<Tab> myTabs = [
-    Tab(
-      text: 'LEFT',
-    ),
-    Tab(
-      text: 'RIGHT',
-    )
-  ];
   late TabController _tabController;
+
+  List<ImageApp> images = [
+    ImageApp('1', 'assets/wallpaper.jpeg', '1.2K', '12/12/2022'),
+    ImageApp('2', 'assets/wallpaper.jpeg', '1.2K', '12/12/2022'),
+    ImageApp('3', 'assets/wallpaper.jpeg', '23', '12/10/2022'),
+    ImageApp('4', 'assets/wallpaper.jpeg', '234', '12/12/2022'),
+    ImageApp('5', 'assets/wallpaper.jpeg', '123', '12/09/2022'),
+    ImageApp('6', 'assets/wallpaper.jpeg', '123', '12/12/2022'),
+    ImageApp('7', 'assets/wallpaper.jpeg', '2K', '12/12/2022'),
+  ];
+
+  void _onTapImage(String id) {
+    debugPrint('Tap image ${id}');
+  }
 
   @override
   void initState() {
@@ -122,8 +128,9 @@ class _ProfileScreenState extends State<ProfileScreen>
                 ],
                 controller: _tabController),
             Expanded(
-              child: TabBarView(controller: _tabController, children: const [
-                GridImageWidget(),
+              child: TabBarView(controller: _tabController, children: [
+                GridImageWidget(
+                    images: images, onTapImage: (id) => _onTapImage(id)),
                 Text('Favoritos'),
               ]),
             )
