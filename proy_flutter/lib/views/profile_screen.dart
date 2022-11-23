@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:proy_flutter/widgets/custom_Drawer.dart';
+import 'package:proy_flutter/widgets/gridimage_widget.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -122,8 +123,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                 controller: _tabController),
             Expanded(
               child: TabBarView(controller: _tabController, children: const [
-                Text('Diseños'),
-                Text('Favoritoos'),
+                GridImageWidget(),
+                Text('Favoritos'),
               ]),
             )
           ],
