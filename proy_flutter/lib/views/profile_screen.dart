@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:proy_flutter/routes/routes.dart';
 import 'package:proy_flutter/widgets/custom_Drawer.dart';
 import 'package:proy_flutter/widgets/gridimage_widget.dart';
 
@@ -45,6 +46,17 @@ class _ProfileScreenState extends State<ProfileScreen>
       appBar: AppBar(
         title: const Text('Perfil'),
         centerTitle: true,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.pushReplacementNamed(context, MyRoutes.rLogin);
+              },
+              child: const Icon(Icons.logout),
+            ),
+          )
+        ],
       ),
       backgroundColor: Colors.white,
       drawer: const customDrawerW(),

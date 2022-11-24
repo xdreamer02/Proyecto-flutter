@@ -19,7 +19,7 @@ class customDrawerW extends StatelessWidget {
           padding: EdgeInsets.zero,
           children: [
             DrawerHeader(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 gradient: LinearGradient(
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
@@ -32,18 +32,18 @@ class customDrawerW extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    CircleAvatar(
+                    const CircleAvatar(
                       radius: 48, // Image radius
                       backgroundImage: NetworkImage(
                           'https://cdn.pixabay.com/photo/2014/11/29/19/33/bald-eagle-550804_960_720.jpg'),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 40,
                     ),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
+                      children: const [
                         Text(
                           'User',
                           style: TextStyle(fontSize: 26, color: Colors.white),
@@ -60,7 +60,7 @@ class customDrawerW extends StatelessWidget {
             ),
             Column(
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 const Divider(
@@ -70,7 +70,7 @@ class customDrawerW extends StatelessWidget {
                   endIndent: 30,
                   color: Colors.grey,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
                 ListTile(
@@ -109,7 +109,7 @@ class customDrawerW extends StatelessWidget {
                   ),
                   onTap: () {},
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
                 const Divider(
@@ -119,7 +119,7 @@ class customDrawerW extends StatelessWidget {
                   endIndent: 30,
                   color: Colors.grey,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
                 ListTile(

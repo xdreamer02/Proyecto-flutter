@@ -5,6 +5,7 @@ import 'package:lottie/lottie.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:proy_flutter/providers/login_provider.dart';
 import 'package:proy_flutter/routes/routes.dart';
+import 'package:proy_flutter/services/auth_service.dart';
 import 'package:proy_flutter/views/index.dart';
 
 class loginScreen extends StatefulWidget {
@@ -45,10 +46,12 @@ class _loginScreenState extends State<loginScreen> {
                     child: Lottie.network(
                         'https://assets3.lottiefiles.com/packages/lf20_L7YrbxFm46.json'),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 40,
                   ),
-                  _LoginForm(),
+                  ChangeNotifierProvider(
+                      create: (context) => LoginProvider(),
+                      child: const _LoginForm()),
                 ],
               ),
             ),
@@ -78,121 +81,137 @@ class _LoginFormState extends State<_LoginForm> {
   @override
   Widget build(BuildContext context) {
     final prov_login = Provider.of<LoginProvider>(context);
+
     return SizedBox(
       child: Form(
           key: prov_login.formKey,
-          child: Column(
-            children: [
-              TextFormField(
-                style: GoogleFonts.montserrat(color: Colors.black),
-                autocorrect: false,
-                keyboardType: TextInputType.emailAddress,
-                decoration: _buildDecoration(
-                  hintText: 'dev@flutter.com',
-                  prefixIcon:
-                      const Icon(Icons.email_outlined, color: Colors.grey),
-                ),
-                onChanged: (value) => prov_login.email = value,
-                validator: (value) {
-                  String caracteres =
-                      r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-                  RegExp regExp = RegExp(caracteres);
-                  return regExp.hasMatch(value ?? '') ? null : 'Coreo invalido';
-                },
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              TextFormField(
-                style: GoogleFonts.montserrat(color: Colors.black),
-                autocorrect: false,
-                obscureText: true,
-                keyboardType: TextInputType.text,
-                decoration: _buildDecoration(
-                    hintText: '******',
-                    prefixIcon: const Icon(
-                      Icons.key,
-                      color: Colors.grey,
-                    ),
-                    suffixIcon: InkWell(
-                      child: Icon(
-                          _isPass ? Icons.visibility : Icons.visibility_off),
-                      onTap: () {
-                        _viewPassword();
-                      },
-                    )),
-                onChanged: (value) => prov_login.password = value,
-                validator: ((value) {
-                  return (value != null && value.length >= 8)
-                      ? null
-                      : 'Debe tener minimo 8 caracteres';
-                }),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              SizedBox(
-                height: 60,
-                width: 250,
-                child: MaterialButton(
-                  color: Colors.purple,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                TextFormField(
+                  style: GoogleFonts.montserrat(color: Colors.black),
+                  autocorrect: false,
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: _buildDecoration(
+                    hintText: 'dev@flutter.com',
+                    prefixIcon:
+                        const Icon(Icons.email_outlined, color: Colors.grey),
                   ),
-                  disabledColor: Colors.purple,
-                  elevation: 1,
-                  onPressed: prov_login.isLoading
-                      ? null
-                      : () async {
-                          FocusScope.of(context).unfocus();
-
-                          if (!prov_login.isValidForm()) return;
-
-                          prov_login.isLoading = true;
-                          await Future.delayed(const Duration(seconds: 3));
-
-                          prov_login.isLoading = false;
-
-                          Navigator.pushReplacementNamed(
-                              context, MyRoutes.rHome);
+                  onChanged: (value) => prov_login.email = value,
+                  validator: (value) {
+                    String caracteres =
+                        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+                    RegExp regExp = RegExp(caracteres);
+                    return regExp.hasMatch(value ?? '')
+                        ? null
+                        : 'Coreo invalido';
+                  },
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                TextFormField(
+                  style: GoogleFonts.montserrat(color: Colors.black),
+                  autocorrect: false,
+                  obscureText: _isPass,
+                  keyboardType: TextInputType.text,
+                  decoration: _buildDecoration(
+                      hintText: '******',
+                      prefixIcon: const Icon(
+                        Icons.key,
+                        color: Colors.grey,
+                      ),
+                      suffixIcon: InkWell(
+                        child: Icon(
+                            _isPass ? Icons.visibility : Icons.visibility_off),
+                        onTap: () {
+                          _viewPassword();
                         },
-                  child: (prov_login.isLoading)
-                      ? const CircularProgressIndicator(
-                          color: Colors.white,
-                        )
-                      : Text(
-                          'INGRESAR',
-                          style: GoogleFonts.montserrat(
-                              color: Colors.white, fontWeight: FontWeight.bold),
-                        ),
+                      )),
+                  onChanged: (value) => prov_login.password = value,
+                  validator: ((value) {
+                    return (value != null && value.length >= 8)
+                        ? null
+                        : 'Debe tener minimo 8 caracteres';
+                  }),
                 ),
-              ),
-              SizedBox(
-                height: 50,
-              ),
-              Text.rich(TextSpan(
-                  text: 'No tienes cuenta aún ',
-                  style: GoogleFonts.montserrat(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 17,
-                  ),
-                  children: [
-                    TextSpan(
-                        text: ' Registrate!',
-                        style: GoogleFonts.montserrat(
-                            color: Colors.blue,
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold),
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () {
-                            Navigator.push(
+                const SizedBox(
+                  height: 15,
+                ),
+                SizedBox(
+                  height: 60,
+                  width: 250,
+                  child: MaterialButton(
+                    color: Colors.purple,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(50),
+                    ),
+                    disabledColor: Colors.purple,
+                    elevation: 1,
+                    onPressed: prov_login.isLoading
+                        ? null
+                        : () async {
+                            FocusScope.of(context).unfocus();
+
+                            final authService = Provider.of<AuthService>(
                                 context,
-                                MaterialPageRoute(
-                                    builder: (context) => registerScreen()));
-                          }),
-                  ]))
-            ],
+                                listen: false);
+
+                            if (!prov_login.isValidForm()) return;
+
+                            prov_login.isLoading = true;
+
+                            final String? errorMessage = await authService
+                                .login(prov_login.email, prov_login.password);
+
+                            if (errorMessage == null) {
+                              // ignore: use_build_context_synchronously
+                              Navigator.pushReplacementNamed(
+                                  context, MyRoutes.rHome);
+                            } else {
+                              prov_login.isLoading = false;
+                            }
+                          },
+                    child: (prov_login.isLoading)
+                        ? const CircularProgressIndicator(
+                            color: Colors.white,
+                          )
+                        : Text(
+                            'INGRESAR',
+                            style: GoogleFonts.montserrat(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 50,
+                ),
+                Text.rich(TextSpan(
+                    text: 'No tienes cuenta aún ',
+                    style: GoogleFonts.montserrat(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 17,
+                    ),
+                    children: [
+                      TextSpan(
+                          text: ' Registrate!',
+                          style: GoogleFonts.montserrat(
+                              color: Colors.blue,
+                              fontSize: 17,
+                              fontWeight: FontWeight.bold),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => registerScreen()));
+                            }),
+                    ]))
+              ],
+            ),
           )),
     );
   }

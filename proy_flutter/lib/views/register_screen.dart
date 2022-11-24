@@ -16,14 +16,14 @@ class registerScreen extends StatelessWidget {
         title: const Text('Registrar'),
         centerTitle: true,
       ),
-      body: SingleChildScrollView(
-        child: GestureDetector(
-          onTap: () {
-            final FocusScopeNode focus = FocusScope.of(context);
-            if (!focus.hasPrimaryFocus && focus.hasFocus) {
-              FocusManager.instance.primaryFocus!.unfocus();
-            }
-          },
+      body: GestureDetector(
+        onTap: () {
+          final FocusScopeNode focus = FocusScope.of(context);
+          if (!focus.hasPrimaryFocus && focus.hasFocus) {
+            FocusManager.instance.primaryFocus!.unfocus();
+          }
+        },
+        child: SingleChildScrollView(
           child: Container(
             height: MediaQuery.of(context).size.height * 0.99,
             decoration: const BoxDecoration(
@@ -33,28 +33,34 @@ class registerScreen extends StatelessWidget {
                     colors: [Colors.black, Colors.purple, Colors.red])),
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: Column(
-                children: [
-                  SizedBox(
-                    width: 500,
-                    child: Lottie.network(
-                        'https://assets3.lottiefiles.com/packages/lf20_jcikwtux.json'),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  ChangeNotifierProvider(
-                      create: (context) => LoginProvider(),
-                      child: const _form()),
-                  TextButton(
-                      onPressed: () {
-                        Navigator.pushReplacementNamed(
-                            context, MyRoutes.rLogin);
-                      },
-                      child: const Text(
-                        'Iniciar Sesion',
-                      ))
-                ],
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    SizedBox(
+                      width: 500,
+                      child: Lottie.network(
+                          'https://assets3.lottiefiles.com/packages/lf20_jcikwtux.json'),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    ChangeNotifierProvider(
+                        create: (context) => LoginProvider(),
+                        child: const _form()),
+                    TextButton(
+                        onPressed: () {
+                          Navigator.pushReplacementNamed(
+                              context, MyRoutes.rLogin);
+                        },
+                        child: Text(
+                          'Iniciar Sesion',
+                          style: GoogleFonts.montserrat(
+                              color: Colors.blue,
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold),
+                        ))
+                  ],
+                ),
               ),
             ),
           ),
@@ -71,13 +77,13 @@ InputDecoration _buildDecoration({
 }) {
   return InputDecoration(
       enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(width: 2, color: Colors.purple),
+          borderSide: const BorderSide(width: 2, color: Colors.purple),
           borderRadius: BorderRadius.circular(15)),
       focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(width: 2, color: Colors.purple),
+          borderSide: const BorderSide(width: 2, color: Colors.purple),
           borderRadius: BorderRadius.circular(15)),
       border: OutlineInputBorder(
-        borderSide: BorderSide(width: 2, color: Colors.purple),
+        borderSide: const BorderSide(width: 2, color: Colors.purple),
         borderRadius: BorderRadius.circular(15),
       ),
       filled: true,
@@ -86,7 +92,7 @@ InputDecoration _buildDecoration({
       hintStyle: GoogleFonts.montserrat(color: Colors.grey),
       prefixIcon: prefixIcon,
       suffixIcon: suffixIcon,
-      contentPadding: EdgeInsets.all(18));
+      contentPadding: const EdgeInsets.all(18));
 }
 
 class _form extends StatefulWidget {
@@ -115,26 +121,18 @@ class __formState extends State<_form> {
           TextFormField(
             style: GoogleFonts.montserrat(color: Colors.black),
             autocorrect: false,
-            obscureText: true,
-            keyboardType: TextInputType.text,
-            decoration: _buildDecoration(
-                hintText: 'User name',
-                prefixIcon: const Icon(
-                  Icons.person,
-                  color: Colors.grey,
-                )),
-          ),
-          const SizedBox(
-            height: 15,
-          ),
-          TextFormField(
-            style: GoogleFonts.montserrat(color: Colors.black),
-            autocorrect: false,
             keyboardType: TextInputType.emailAddress,
             decoration: _buildDecoration(
                 hintText: 'dev@flutter.com',
                 prefixIcon:
                     const Icon(Icons.email_outlined, color: Colors.grey)),
+            onChanged: (value) => loginProvider.email = value,
+            validator: (value) {
+              String caracteres =
+                  r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+              RegExp regExp = RegExp(caracteres);
+              return regExp.hasMatch(value ?? '') ? null : 'Coreo invalido';
+            },
           ),
           const SizedBox(
             height: 15,
@@ -142,7 +140,7 @@ class __formState extends State<_form> {
           TextFormField(
             style: GoogleFonts.montserrat(color: Colors.black),
             autocorrect: false,
-            obscureText: true,
+            obscureText: _isPassword,
             keyboardType: TextInputType.text,
             decoration: _buildDecoration(
                 hintText: '******',
@@ -157,6 +155,12 @@ class __formState extends State<_form> {
                     _viewPassword();
                   },
                 )),
+            onChanged: (value) => loginProvider.password = value,
+            validator: ((value) {
+              return (value != null && value.length >= 8)
+                  ? null
+                  : 'Debe tener minimo 8 caracteres';
+            }),
           ),
           const SizedBox(
             height: 15,
@@ -188,16 +192,22 @@ class __formState extends State<_form> {
 
                       if (errorMessage == null) {
                         // ignore: use_build_context_synchronously
-                        Navigator.pushReplacementNamed(context, MyRoutes.rHome);
+                        Navigator.pushReplacementNamed(
+                            context, MyRoutes.rLogin);
                       } else {
+                        debugPrint(errorMessage);
                         loginProvider.isLoading = false;
                       }
                     },
-              child: Text(
-                'REGISTRAR',
-                style: GoogleFonts.montserrat(
-                    color: Colors.white, fontWeight: FontWeight.bold),
-              ),
+              child: (loginProvider.isLoading)
+                  ? const CircularProgressIndicator(
+                      color: Colors.white,
+                    )
+                  : Text(
+                      'REGISTRAR',
+                      style: GoogleFonts.montserrat(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
             ),
           )
         ],

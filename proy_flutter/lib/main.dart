@@ -32,9 +32,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Wallpaper Store',
+      debugShowCheckedModeBanner: false,
       theme: Provider.of<ThemeProvider>(context).currentTheme,
       onGenerateRoute: MyRoutes.generateRoute,
-      initialRoute: MyRoutes.rHome,
+      initialRoute: MyRoutes.rLogin,
       //home: const HomePage(),
     );
   }
