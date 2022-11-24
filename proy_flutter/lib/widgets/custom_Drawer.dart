@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:proy_flutter/routes/routes.dart';
 import 'package:proy_flutter/views/config.dart';
 import 'package:proy_flutter/views/home.dart';
 
@@ -144,7 +145,9 @@ class customDrawerW extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                         color: Colors.black.withOpacity(0.5)),
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pushReplacementNamed(context, MyRoutes.rPerfil);
+                  },
                 ),
                 ListTile(
                   leading: const Icon(
