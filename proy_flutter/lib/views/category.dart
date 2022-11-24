@@ -91,22 +91,94 @@ class categoryScreen extends StatelessWidget {
                 style:
                     GoogleFonts.montserrat(fontSize: 20, color: Colors.white),
               ),
-              SizedBox(
-                height: 350,
-                child: ListView.builder(
-                    itemCount: 3,
-                    itemBuilder: ((context, index) => Container(
-                          decoration: const BoxDecoration(
-                            color: Colors.lightBlue,
-                            borderRadius: BorderRadius.all(Radius.circular(20)),
-                          ),
-                          height: 100,
-                          width: 100,
-                          margin: EdgeInsets.all(5),
-                          child: Center(
-                            child: Text('Colors'),
-                          ),
-                        ))),
+              Container(
+                color: Colors.black,
+                height: MediaQuery.of(context).size.width,
+                width: double.infinity,
+                child: GridView.count(
+                  primary: false,
+                  padding: const EdgeInsets.all(20),
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
+                  crossAxisCount: 2,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(8),
+                      color: Colors.teal[100],
+                      child: const Text("He'd have you all unravel at the"),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(8),
+                      color: Colors.teal[200],
+                      child: const Text('Heed not the rabble'),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(8),
+                      color: Colors.teal[300],
+                      child: const Text('Sound of screams but the'),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(8),
+                      color: Colors.teal[400],
+                      child: const Text('Who scream'),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(8),
+                      color: Colors.teal[500],
+                      child: const Text('Revolution is coming...'),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(8),
+                      color: Colors.teal[600],
+                      child: const Text('Revolution, they...'),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(8),
+                      color: Colors.teal[200],
+                      child: const Text('Heed not the rabble'),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(8),
+                      color: Colors.teal[200],
+                      child: const Text('Heed not the rabble'),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(8),
+                      color: Colors.teal[200],
+                      child: const Text('Heed not the rabble'),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(8),
+                      color: Colors.teal[200],
+                      child: const Text('Heed not the rabble'),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(8),
+                      color: Colors.teal[200],
+                      child: const Text('Heed not the rabble'),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(8),
+                      color: Colors.teal[200],
+                      child: const Text('Heed not the rabble'),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(8),
+                      color: Colors.teal[200],
+                      child: const Text('Heed not the rabble'),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(8),
+                      color: Colors.teal[200],
+                      child: const Text('Heed not the rabble'),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(8),
+                      color: Colors.teal[200],
+                      child: const Text('Heed not the rabble'),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),

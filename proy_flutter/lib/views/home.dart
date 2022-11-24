@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:proy_flutter/widgets/custom_Drawer.dart';
 import 'package:proy_flutter/views/index.dart';
 
@@ -40,7 +41,7 @@ class _HomePageState extends State<HomePage>
         children: [
           Material(
             child: TabBar(
-              indicatorColor: Colors.white,
+              indicatorColor: Colors.green,
               labelColor: Colors.black,
               controller: _controlller,
               tabs: [
@@ -60,10 +61,10 @@ class _HomePageState extends State<HomePage>
           Expanded(
             child: TabBarView(controller: _controlller, children: [
               Container(
-                color: Colors.amber,
-                height: MediaQuery.of(context).size.height * 0.99,
-                width: double.infinity,
-              ),
+                  height: MediaQuery.of(context).size.height * 0.9,
+                  width: MediaQuery.of(context).size.width,
+                  color: Colors.green,
+                  child: WallPage()),
               categoryScreen()
             ]),
           )

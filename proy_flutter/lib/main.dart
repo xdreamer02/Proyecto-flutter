@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
       title: 'Wallpaper Store',
       theme: Provider.of<ThemeProvider>(context).currentTheme,
       onGenerateRoute: MyRoutes.generateRoute,
-      initialRoute: MyRoutes.rLogin,
+      initialRoute: MyRoutes.rHome,
       //home: const HomePage(),
     );
   }

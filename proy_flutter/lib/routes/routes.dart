@@ -14,6 +14,7 @@ class MyRoutes {
         return MaterialPageRoute(builder: (_) => const ConfigPage());
       case ('/login'):
         return MaterialPageRoute(builder: (_) => const loginScreen());
+
       default:
         return MaterialPageRoute(builder: (_) => const HomePage());
     }
