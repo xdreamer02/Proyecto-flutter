@@ -7,6 +7,8 @@ class MyRoutes {
   static const String rPerfil = '/perfil';
   static const String rLogin = '/login';
 
+  static const String rRegister = '/register';
+
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case ('/home'):
@@ -17,6 +19,8 @@ class MyRoutes {
         return MaterialPageRoute(builder: (_) => const loginScreen());
       case ('/perfil'):
         return MaterialPageRoute(builder: (_) => const ProfileScreen());
+      case ('/register'):
+        return MaterialPageRoute(builder: (_) => const registerScreen());
       default:
         return MaterialPageRoute(builder: (_) => const HomePage());
     }

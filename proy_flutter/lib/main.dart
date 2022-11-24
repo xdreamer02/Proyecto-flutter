@@ -4,6 +4,7 @@ import 'package:proy_flutter/preferences/preferences.dart';
 import 'package:proy_flutter/providers/login_provider.dart';
 import 'package:proy_flutter/providers/theme_provider.dart';
 import 'package:proy_flutter/routes/routes.dart';
+import 'package:proy_flutter/services/auth_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,7 +17,8 @@ void main() async {
           create: (_) => ThemeProvider(isDarkMode: Preferences.theme)),
       ChangeNotifierProvider(
         create: (_) => LoginProvider(),
-      )
+      ),
+      ChangeNotifierProvider(create: (_) => AuthService())
     ],
     child: const MyApp(),
   ));
