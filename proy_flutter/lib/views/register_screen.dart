@@ -45,8 +45,7 @@ class registerScreen extends StatelessWidget {
                       height: 20,
                     ),
                     ChangeNotifierProvider(
-                        create: (context) => LoginProvider(),
-                        child: const _form()),
+                        create: (context) => LoginProvider(), child: _form()),
                     TextButton(
                         onPressed: () {
                           Navigator.pushReplacementNamed(
@@ -66,6 +65,130 @@ class registerScreen extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class _form extends StatefulWidget {
+  const _form({super.key});
+
+  @override
+  State<_form> createState() => __formState();
+}
+
+class __formState extends State<_form> {
+  bool _isPassword = true;
+
+  void _viewPassword() {
+    setState(() {
+      _isPassword = !_isPassword;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final loginProvider = Provider.of<LoginProvider>(context);
+    return SizedBox(
+      child: Form(
+          key: loginProvider.formKey,
+          child: Column(
+            children: [
+              TextFormField(
+                style: GoogleFonts.montserrat(color: Colors.black),
+                autocorrect: false,
+                keyboardType: TextInputType.emailAddress,
+                decoration: _buildDecoration(
+                    hintText: 'dev@flutter.com',
+                    prefixIcon:
+                        const Icon(Icons.email_outlined, color: Colors.grey)),
+                onChanged: (value) => loginProvider.email = value,
+                validator: (value) {
+                  String caracteres =
+                      r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+                  RegExp regExp = RegExp(caracteres);
+                  return regExp.hasMatch(value ?? '') ? null : 'Coreo invalido';
+                },
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              TextFormField(
+                style: GoogleFonts.montserrat(color: Colors.black),
+                autocorrect: false,
+                obscureText: _isPassword,
+                keyboardType: TextInputType.text,
+                decoration: _buildDecoration(
+                    hintText: '******',
+                    prefixIcon: const Icon(
+                      Icons.key,
+                      color: Colors.grey,
+                    ),
+                    suffixIcon: InkWell(
+                      child: Icon(_isPassword
+                          ? Icons.visibility
+                          : Icons.visibility_off),
+                      onTap: () {
+                        _viewPassword();
+                      },
+                    )),
+                onChanged: (value) => loginProvider.password = value,
+                validator: ((value) {
+                  return (value != null && value.length >= 8)
+                      ? null
+                      : 'Debe tener minimo 8 caracteres';
+                }),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              SizedBox(
+                height: 60,
+                width: 250,
+                child: MaterialButton(
+                  color: Colors.purple,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  disabledColor: Colors.purple,
+                  elevation: 1,
+                  onPressed: loginProvider.isLoading
+                      ? null
+                      : () async {
+                          FocusScope.of(context).unfocus();
+
+                          final authService =
+                              Provider.of<AuthService>(context, listen: false);
+
+                          if (!loginProvider.isValidForm()) return;
+
+                          loginProvider.isLoading = true;
+
+                          final String? errorMessage =
+                              await authService.createUser(
+                                  loginProvider.email, loginProvider.password);
+
+                          if (errorMessage == null) {
+                            // ignore: use_build_context_synchronously
+                            Navigator.pushReplacementNamed(
+                                context, MyRoutes.rLogin);
+                          } else {
+                            debugPrint(errorMessage);
+                            loginProvider.isLoading = false;
+                          }
+                        },
+                  child: (loginProvider.isLoading)
+                      ? const CircularProgressIndicator(
+                          color: Colors.white,
+                        )
+                      : Text(
+                          'REGISTRAR',
+                          style: GoogleFonts.montserrat(
+                              color: Colors.white, fontWeight: FontWeight.bold),
+                        ),
+                ),
+              )
+            ],
+          )),
     );
   }
 }
@@ -93,125 +216,4 @@ InputDecoration _buildDecoration({
       prefixIcon: prefixIcon,
       suffixIcon: suffixIcon,
       contentPadding: const EdgeInsets.all(18));
-}
-
-class _form extends StatefulWidget {
-  const _form({super.key});
-
-  @override
-  State<_form> createState() => __formState();
-}
-
-class __formState extends State<_form> {
-  bool _isPassword = true;
-
-  void _viewPassword() {
-    setState(() {
-      _isPassword = !_isPassword;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final loginProvider = Provider.of<LoginProvider>(context);
-    return SizedBox(
-      child: Form(
-          child: Column(
-        children: [
-          TextFormField(
-            style: GoogleFonts.montserrat(color: Colors.black),
-            autocorrect: false,
-            keyboardType: TextInputType.emailAddress,
-            decoration: _buildDecoration(
-                hintText: 'dev@flutter.com',
-                prefixIcon:
-                    const Icon(Icons.email_outlined, color: Colors.grey)),
-            onChanged: (value) => loginProvider.email = value,
-            validator: (value) {
-              String caracteres =
-                  r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-              RegExp regExp = RegExp(caracteres);
-              return regExp.hasMatch(value ?? '') ? null : 'Coreo invalido';
-            },
-          ),
-          const SizedBox(
-            height: 15,
-          ),
-          TextFormField(
-            style: GoogleFonts.montserrat(color: Colors.black),
-            autocorrect: false,
-            obscureText: _isPassword,
-            keyboardType: TextInputType.text,
-            decoration: _buildDecoration(
-                hintText: '******',
-                prefixIcon: const Icon(
-                  Icons.key,
-                  color: Colors.grey,
-                ),
-                suffixIcon: InkWell(
-                  child: Icon(
-                      _isPassword ? Icons.visibility : Icons.visibility_off),
-                  onTap: () {
-                    _viewPassword();
-                  },
-                )),
-            onChanged: (value) => loginProvider.password = value,
-            validator: ((value) {
-              return (value != null && value.length >= 8)
-                  ? null
-                  : 'Debe tener minimo 8 caracteres';
-            }),
-          ),
-          const SizedBox(
-            height: 15,
-          ),
-          SizedBox(
-            height: 60,
-            width: 250,
-            child: MaterialButton(
-              color: Colors.purple,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(50),
-              ),
-              disabledColor: Colors.purple,
-              elevation: 1,
-              onPressed: loginProvider.isLoading
-                  ? null
-                  : () async {
-                      FocusScope.of(context).unfocus();
-
-                      final authService =
-                          Provider.of<AuthService>(context, listen: false);
-
-                      if (!loginProvider.isValidForm()) return;
-
-                      loginProvider.isLoading = true;
-
-                      final String? errorMessage = await authService.createUser(
-                          loginProvider.email, loginProvider.password);
-
-                      if (errorMessage == null) {
-                        // ignore: use_build_context_synchronously
-                        Navigator.pushReplacementNamed(
-                            context, MyRoutes.rLogin);
-                      } else {
-                        debugPrint(errorMessage);
-                        loginProvider.isLoading = false;
-                      }
-                    },
-              child: (loginProvider.isLoading)
-                  ? const CircularProgressIndicator(
-                      color: Colors.white,
-                    )
-                  : Text(
-                      'REGISTRAR',
-                      style: GoogleFonts.montserrat(
-                          color: Colors.white, fontWeight: FontWeight.bold),
-                    ),
-            ),
-          )
-        ],
-      )),
-    );
-  }
 }
