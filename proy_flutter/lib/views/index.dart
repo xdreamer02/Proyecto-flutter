@@ -1,3 +1,4 @@
+export 'package:proy_flutter/views/verifyauth_screen.dart';
 export 'package:proy_flutter/views/upload_screen.dart';
 export 'package:proy_flutter/views/profile_screen.dart';
 export 'package:proy_flutter/views/login_screen.dart';

@@ -4,7 +4,7 @@ import 'package:proy_flutter/preferences/preferences.dart';
 import 'package:proy_flutter/providers/login_provider.dart';
 import 'package:proy_flutter/providers/theme_provider.dart';
 import 'package:proy_flutter/routes/routes.dart';
-import 'package:proy_flutter/services/auth_service.dart';
+import 'package:proy_flutter/services/index.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,8 +34,9 @@ class MyApp extends StatelessWidget {
       title: 'Wallpaper Store',
       debugShowCheckedModeBanner: false,
       theme: Provider.of<ThemeProvider>(context).currentTheme,
+      scaffoldMessengerKey: MsgAuth.msgKEY,
       onGenerateRoute: MyRoutes.generateRoute,
-      initialRoute: MyRoutes.rLogin,
+      initialRoute: MyRoutes.rVerify,
       //home: const HomePage(),
     );
   }

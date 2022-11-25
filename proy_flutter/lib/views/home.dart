@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:proy_flutter/routes/routes.dart';
+import 'package:proy_flutter/services/auth_service.dart';
 import 'package:proy_flutter/widgets/custom_Drawer.dart';
 import 'package:proy_flutter/views/index.dart';
 
@@ -31,10 +34,22 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
+    final authService = Provider.of<AuthService>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Fondos de pantalla'),
+        title: const Text('Fondos de pantalla'),
         centerTitle: true,
+        actions: [
+          IconButton(
+              onPressed: () {
+                authService.logout();
+                Navigator.pushReplacementNamed(context, MyRoutes.rLogin);
+              },
+              icon: const Icon(
+                Icons.logout,
+                color: Colors.red,
+              ))
+        ],
       ),
       drawer: customDrawerW(),
       body: Column(

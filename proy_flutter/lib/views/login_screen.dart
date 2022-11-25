@@ -5,7 +5,7 @@ import 'package:lottie/lottie.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:proy_flutter/providers/login_provider.dart';
 import 'package:proy_flutter/routes/routes.dart';
-import 'package:proy_flutter/services/auth_service.dart';
+import 'package:proy_flutter/services/index.dart';
 import 'package:proy_flutter/views/index.dart';
 
 class loginScreen extends StatefulWidget {
@@ -166,10 +166,12 @@ class _LoginFormState extends State<_LoginForm> {
                                 .login(prov_login.email, prov_login.password);
 
                             if (errorMessage == null) {
+                              MsgAuth.verSnackbar('Bienvenido');
                               // ignore: use_build_context_synchronously
                               Navigator.pushReplacementNamed(
                                   context, MyRoutes.rHome);
                             } else {
+                              MsgAuth.verSnackbar('Email y/o clave invalida');
                               prov_login.isLoading = false;
                             }
                           },
