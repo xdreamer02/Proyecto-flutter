@@ -107,7 +107,9 @@ class customDrawerW extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                         color: Colors.black.withOpacity(0.5)),
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pushReplacementNamed(context, MyRoutes.rUpload);
+                  },
                 ),
                 const SizedBox(
                   height: 15,
@@ -124,7 +126,7 @@ class customDrawerW extends StatelessWidget {
                 ),
                 ListTile(
                   title: Text(
-                    'All labels',
+                    'Opciones',
                     style: GoogleFonts.montserrat(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
