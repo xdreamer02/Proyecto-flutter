@@ -1,8 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class WallPage extends StatelessWidget {
+class WallPage extends StatefulWidget {
   const WallPage({super.key});
+
+  @override
+  State<WallPage> createState() => _WallPageState();
+}
+
+class _WallPageState extends State<WallPage> {
+  int _lastItem = 0;
+  List<int> images = [];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _agregarElements();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +33,7 @@ class WallPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  height: 10,
+                  height: 20,
                 ),
                 Text(
                   'Destacados',
@@ -33,21 +48,21 @@ class WallPage extends StatelessWidget {
                 SizedBox(
                   height: 120,
                   child: ListView.builder(
-                      itemCount: 8,
+                      itemCount: images.length,
                       scrollDirection: Axis.horizontal,
-                      itemBuilder: ((context, index) => Container(
-                            decoration: const BoxDecoration(
-                              color: Colors.amber,
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(20),
-                                  topRight: Radius.circular(20),
-                                  bottomRight: Radius.circular(20),
-                                  bottomLeft: Radius.circular(20)),
-                            ),
-                            width: 190,
-                            margin: EdgeInsets.all(5),
-                            child: Center(
-                              child: Text('Popular'),
+                      itemBuilder: ((context, index) => Padding(
+                            padding: const EdgeInsets.only(right: 8.0),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(20),
+                              child: Container(
+                                width: 200,
+                                child: FadeInImage(
+                                  placeholder: AssetImage('assets/loading.gif'),
+                                  image: NetworkImage(
+                                      'https://picsum.photos/200/200?=${images[index]}'),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
                             ),
                           ))),
                 ),
@@ -69,19 +84,19 @@ class WallPage extends StatelessWidget {
                   child: ListView.builder(
                       itemCount: 8,
                       scrollDirection: Axis.horizontal,
-                      itemBuilder: ((context, index) => Container(
-                            decoration: const BoxDecoration(
-                              color: Colors.amber,
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(20),
-                                  topRight: Radius.circular(20),
-                                  bottomRight: Radius.circular(20),
-                                  bottomLeft: Radius.circular(20)),
-                            ),
-                            width: 190,
-                            margin: EdgeInsets.all(5),
-                            child: Center(
-                              child: Text('Popular'),
+                      itemBuilder: ((context, index) => Padding(
+                            padding: const EdgeInsets.only(right: 8.0),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(20),
+                              child: Container(
+                                width: 200,
+                                child: FadeInImage(
+                                  placeholder: AssetImage('assets/loading.gif'),
+                                  image: NetworkImage(
+                                      'https://picsum.photos/210/230?=${images[index]}'),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
                             ),
                           ))),
                 ),
@@ -94,96 +109,44 @@ class WallPage extends StatelessWidget {
             ),
           ),
         ),
-        Container(
-          color: Colors.black,
-          height: MediaQuery.of(context).size.width,
-          width: double.infinity,
-          child: GridView.count(
-            primary: false,
-            padding: const EdgeInsets.all(20),
-            crossAxisSpacing: 10,
-            mainAxisSpacing: 10,
-            crossAxisCount: 3,
-            children: [
-              Container(
-                padding: const EdgeInsets.all(8),
-                color: Colors.teal[100],
-                child: const Text("He'd have you all unravel at the"),
-              ),
-              Container(
-                padding: const EdgeInsets.all(8),
-                color: Colors.teal[200],
-                child: const Text('Heed not the rabble'),
-              ),
-              Container(
-                padding: const EdgeInsets.all(8),
-                color: Colors.teal[300],
-                child: const Text('Sound of screams but the'),
-              ),
-              Container(
-                padding: const EdgeInsets.all(8),
-                color: Colors.teal[400],
-                child: const Text('Who scream'),
-              ),
-              Container(
-                padding: const EdgeInsets.all(8),
-                color: Colors.teal[500],
-                child: const Text('Revolution is coming...'),
-              ),
-              Container(
-                padding: const EdgeInsets.all(8),
-                color: Colors.teal[600],
-                child: const Text('Revolution, they...'),
-              ),
-              Container(
-                padding: const EdgeInsets.all(8),
-                color: Colors.teal[200],
-                child: const Text('Heed not the rabble'),
-              ),
-              Container(
-                padding: const EdgeInsets.all(8),
-                color: Colors.teal[200],
-                child: const Text('Heed not the rabble'),
-              ),
-              Container(
-                padding: const EdgeInsets.all(8),
-                color: Colors.teal[200],
-                child: const Text('Heed not the rabble'),
-              ),
-              Container(
-                padding: const EdgeInsets.all(8),
-                color: Colors.teal[200],
-                child: const Text('Heed not the rabble'),
-              ),
-              Container(
-                padding: const EdgeInsets.all(8),
-                color: Colors.teal[200],
-                child: const Text('Heed not the rabble'),
-              ),
-              Container(
-                padding: const EdgeInsets.all(8),
-                color: Colors.teal[200],
-                child: const Text('Heed not the rabble'),
-              ),
-              Container(
-                padding: const EdgeInsets.all(8),
-                color: Colors.teal[200],
-                child: const Text('Heed not the rabble'),
-              ),
-              Container(
-                padding: const EdgeInsets.all(8),
-                color: Colors.teal[200],
-                child: const Text('Heed not the rabble'),
-              ),
-              Container(
-                padding: const EdgeInsets.all(8),
-                color: Colors.teal[200],
-                child: const Text('Heed not the rabble'),
-              ),
-            ],
+        Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Container(
+            height: MediaQuery.of(context).size.width,
+            width: double.infinity,
+            child: GridView.builder(
+                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                    maxCrossAxisExtent: 200,
+                    childAspectRatio: 1 / 2,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10),
+                itemCount: images.length,
+                itemBuilder: (BuildContext ctx, index) {
+                  return ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: Container(
+                      child: FadeInImage(
+                        placeholder: AssetImage('assets/loading.gif'),
+                        image: NetworkImage(
+                            'https://picsum.photos/200/300?=${images[index]}'),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  );
+                }),
           ),
         ),
       ],
     );
+  }
+
+  void _agregarElements() {
+    for (var i = 0; i < 30; i++) {
+      _lastItem++;
+
+      images.add(_lastItem);
+
+      setState(() {});
+    }
   }
 }
