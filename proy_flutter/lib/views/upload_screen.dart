@@ -140,7 +140,7 @@ class _UploadScreenState extends State<UploadScreen> {
                   Image.file(
                     image!,
                     width: 400,
-                    height: 00,
+                    height: 400,
                     fit: BoxFit.cover,
                   ),
                   Positioned(
