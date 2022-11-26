@@ -32,15 +32,19 @@ class _UploadScreenState extends State<UploadScreen> {
 
       if (pickImage == null) return;
 
+      print('pick image path: ${pickImage.path}');
+
       final imageTemp = File(pickImage.path);
 
       final Directory directory = await getApplicationDocumentsDirectory();
 
       String path = directory.path;
 
+      print('copy image path: ${path}');
+
       String id = Uuid().v1();
 
-      final File newImage = await imageTemp.copy('$path/$id.png');
+      final File newImage = await imageTemp.copy('$path/$id.jpg');
 
       setState(() {
         image = newImage;
@@ -81,6 +85,10 @@ class _UploadScreenState extends State<UploadScreen> {
           date: DateFormat('dd/MM/yyyy').format(now));
 
       String? response = await service.saveLocal(imageModel);
+
+      final id = await service.save(imageModel);
+
+      print('db: $id');
 
       EasyLoading.dismiss();
 

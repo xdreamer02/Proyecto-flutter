@@ -79,7 +79,7 @@ class _HomePageState extends State<HomePage>
                   height: MediaQuery.of(context).size.height * 0.9,
                   width: MediaQuery.of(context).size.width,
                   color: Colors.black,
-                  child: WallPage()),
+                  child: const WallPage()),
               categoryScreen()
             ]),
           )
