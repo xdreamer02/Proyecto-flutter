@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:proy_flutter/models/image_model.dart';
+import 'package:proy_flutter/preferences/preferences.dart';
 
 class WallPage extends StatefulWidget {
   const WallPage({super.key});
@@ -10,7 +14,10 @@ class WallPage extends StatefulWidget {
 
 class _WallPageState extends State<WallPage> {
   int _lastItem = 0;
+
   List<int> images = [];
+
+  List<ImageModel> imageNews = Preferences.imageNews;
 
   @override
   void initState() {
@@ -32,41 +39,41 @@ class _WallPageState extends State<WallPage> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Text(
-                  'Destacados',
+                  'Nuevos',
                   style: GoogleFonts.montserrat(
                       fontSize: 25,
                       color: Colors.white,
                       fontWeight: FontWeight.bold),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 SizedBox(
                   height: 120,
                   child: ListView.builder(
-                      itemCount: images.length,
+                      itemCount: imageNews.length,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: ((context, index) => Padding(
                             padding: const EdgeInsets.only(right: 8.0),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(20),
-                              child: Container(
+                              child: SizedBox(
                                 width: 200,
                                 child: FadeInImage(
-                                  placeholder: AssetImage('assets/loading.gif'),
-                                  image: NetworkImage(
-                                      'https://picsum.photos/200/200?=${images[index]}'),
+                                  placeholder:
+                                      const AssetImage('assets/loading.gif'),
+                                  image: FileImage(File(imageNews[index].path)),
                                   fit: BoxFit.cover,
                                 ),
                               ),
                             ),
                           ))),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Text(
@@ -76,7 +83,7 @@ class _WallPageState extends State<WallPage> {
                       color: Colors.white,
                       fontWeight: FontWeight.bold),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 SizedBox(
