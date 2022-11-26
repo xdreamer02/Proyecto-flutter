@@ -1,9 +1,17 @@
 import 'dart:io';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:proy_flutter/widgets/custom_Drawer.dart';
+import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:proy_flutter/models/image_model.dart';
+import 'package:proy_flutter/providers/index.dart';
+import 'package:proy_flutter/services/index.dart';
+import 'package:proy_flutter/widgets/index.dart';
+import 'package:proy_flutter/widgets/utils.dart';
+import 'package:uuid/uuid.dart';
 
 class UploadScreen extends StatefulWidget {
   const UploadScreen({super.key});
@@ -14,11 +22,8 @@ class UploadScreen extends StatefulWidget {
 
 class _UploadScreenState extends State<UploadScreen> {
   File? image;
+
   int currentStep = 0;
-
-  List<String> categories = ['Animales', 'Paisajes', 'Personajes'];
-
-  String category = '';
 
   Future pickImage() async {
     try {
@@ -29,21 +34,78 @@ class _UploadScreenState extends State<UploadScreen> {
 
       final imageTemp = File(pickImage.path);
 
+      final Directory directory = await getApplicationDocumentsDirectory();
+
+      String path = directory.path;
+
+      String id = Uuid().v1();
+
+      final File newImage = await imageTemp.copy('$path/$id.png');
+
       setState(() {
-        this.image = imageTemp;
+        image = newImage;
       });
     } catch (e) {
       debugPrint('error pick image $e');
     }
   }
 
+  Future saveImage(ImageAppProvider imageAppProvider) async {
+    FocusScope.of(context).unfocus();
+
+    GalleryService service =
+        Provider.of<GalleryService>(context, listen: false);
+
+    if (!imageAppProvider.isValidForm()) return;
+
+    imageAppProvider.isLoading = true;
+
+    EasyLoading.show(status: 'Guardando...');
+
+    if (image == null) {
+      imageAppProvider.isLoading = false;
+
+      MsgAuth.verSnackbarStateColor(
+          msg: 'No selecciono una imagen', color: Colors.red);
+      return;
+    }
+
+    try {
+      DateTime now = DateTime.now();
+
+      ImageModel imageModel = ImageModel(
+          title: imageAppProvider.title,
+          description: imageAppProvider.description,
+          path: image?.path ?? '',
+          favorites: '0',
+          date: DateFormat('dd/MM/yyyy').format(now));
+
+      String? response = await service.saveLocal(imageModel);
+
+      EasyLoading.dismiss();
+
+      imageAppProvider.isLoading = false;
+
+      MsgAuth.verSnackbarStateColor(msg: response!, color: Colors.green);
+    } catch (e) {
+      EasyLoading.dismiss();
+
+      imageAppProvider.isLoading = false;
+
+      MsgAuth.verSnackbarStateColor(
+          msg: 'Ocurrio un error al guardar la imagen', color: Colors.red);
+    }
+
+    debugPrint('complete');
+  }
+
   @override
   Widget build(BuildContext context) {
-    category = categories.first;
+    final imageAppProvider = Provider.of<ImageAppProvider>(context);
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Subir imagen'),
+        title: const Text('Subir imagen'),
         centerTitle: true,
       ),
       drawer: const customDrawerW(),
@@ -58,17 +120,49 @@ class _UploadScreenState extends State<UploadScreen> {
                 })),
           onStepContinue: () {
             bool isLastStep = (currentStep == 1);
+
             if (isLastStep) {
-              // guardar imagen
+              imageAppProvider.isLoading ? null : saveImage(imageAppProvider);
             } else {
-              setState(() {
-                currentStep += 1;
-              });
+              if (image == null) {
+                MsgAuth.verSnackbarStateColor(
+                    msg: 'Necesitar seleccionar una imagen para continuar',
+                    color: Colors.red);
+              } else {
+                setState(() {
+                  currentStep += 1;
+                });
+              }
             }
           },
           onStepTapped: (value) => setState(() {
             currentStep = value;
           }),
+          controlsBuilder: (context, details) {
+            bool isLastStep = (currentStep == 1);
+            return Padding(
+              padding: const EdgeInsets.only(top: 8),
+              child: Row(
+                children: [
+                  TextButton(
+                      onPressed: details.onStepContinue,
+                      child: Text(
+                          imageAppProvider.isLoading
+                              ? 'Cargando ...'
+                              : isLastStep
+                                  ? 'Terminar'
+                                  : 'Continuar',
+                          style: const TextStyle(
+                              fontSize: 18, color: Colors.purple))),
+                  TextButton(
+                      onPressed: details.onStepCancel,
+                      child: const Text('Cancelar',
+                          style:
+                              TextStyle(fontSize: 18, color: Colors.purple))),
+                ],
+              ),
+            );
+          },
           steps: [
             Step(
                 title: const Text('Imagen'),
@@ -78,51 +172,8 @@ class _UploadScreenState extends State<UploadScreen> {
                 title: const Text('Datos'),
                 state: currentStep > 1 ? StepState.complete : StepState.indexed,
                 isActive: currentStep >= 1,
-                content: Column(
-                  children: [
-                    Column(
-                      children: [
-                        const Padding(
-                          padding: EdgeInsets.only(bottom: 10),
-                          child: _titleFieldWidget(
-                            title: 'Titulo',
-                            subTitle: '0/22',
-                          ),
-                        ),
-                        const _textFieldWidget(
-                            keyboardType: TextInputType.text,
-                            hintText: 'Paisaje del mar'),
-                        const Padding(
-                          padding: EdgeInsets.only(top: 10, bottom: 10),
-                          child: _titleFieldWidget(title: 'Categoria'),
-                        ),
-                        SizedBox(
-                          width: double.infinity,
-                          child: DropdownButton(
-                              isExpanded: true,
-                              value: category,
-                              items: categories
-                                  .map((e) => DropdownMenuItem(
-                                        value: e,
-                                        child: Text(e),
-                                      ))
-                                  .toList(),
-                              onChanged: (value) {}),
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.only(top: 10, bottom: 10),
-                          child: _titleFieldWidget(
-                            title: 'Descripción',
-                            subTitle: '0/220',
-                          ),
-                        ),
-                        const _textFieldWidget(
-                            maxLines: 4,
-                            keyboardType: TextInputType.multiline,
-                            hintText: 'Paisaje del mar en Ica'),
-                      ],
-                    )
-                  ],
+                content: _FormWidget(
+                  imageAppProvider: imageAppProvider,
                 ))
           ],
         ),
@@ -135,33 +186,13 @@ class _UploadScreenState extends State<UploadScreen> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         image != null
-            ? Stack(
-                children: [
-                  Image.file(
-                    image!,
-                    width: 400,
-                    height: 400,
-                    fit: BoxFit.cover,
-                  ),
-                  Positioned(
-                      right: 0,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: CircleAvatar(
-                          backgroundColor:
-                              const Color.fromARGB(131, 255, 255, 255),
-                          child: IconButton(
-                            color: Colors.black45,
-                            icon: const Icon(Icons.close),
-                            onPressed: () {
-                              setState(() {
-                                image = null;
-                              });
-                            },
-                          ),
-                        ),
-                      ))
-                ],
+            ? ImagePickerWidget(
+                image: image,
+                onPressed: () {
+                  setState(() {
+                    image = null;
+                  });
+                },
               )
             : DottedBorder(
                 color: Colors.black45,
@@ -196,64 +227,110 @@ class _UploadScreenState extends State<UploadScreen> {
   }
 }
 
-class _textFieldWidget extends StatelessWidget {
-  final int? maxLines;
-  final TextInputType? keyboardType;
-  final String? hintText;
+class _FormWidget extends StatefulWidget {
+  final ImageAppProvider imageAppProvider;
 
-  const _textFieldWidget({
-    Key? key,
-    this.maxLines,
-    this.keyboardType,
-    this.hintText,
-  }) : super(key: key);
+  const _FormWidget({Key? key, required this.imageAppProvider})
+      : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return TextFormField(
-      maxLines: maxLines,
-      keyboardType: keyboardType,
-      decoration: InputDecoration(
-        filled: true,
-        fillColor: Colors.white,
-        hintText: hintText,
-        hintStyle: GoogleFonts.montserrat(color: Colors.grey),
-        enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(width: 2, color: Colors.black),
-            borderRadius: BorderRadius.circular(15)),
-        focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(width: 2, color: Colors.purple),
-            borderRadius: BorderRadius.circular(15)),
-        border: OutlineInputBorder(
-          borderSide: const BorderSide(width: 2, color: Colors.purple),
-          borderRadius: BorderRadius.circular(15),
-        ),
-      ),
-    );
-  }
+  State<_FormWidget> createState() => _FormWidgetState(imageAppProvider);
 }
 
-class _titleFieldWidget extends StatelessWidget {
-  final String? title;
-  final String? subTitle;
+class _FormWidgetState extends State<_FormWidget> {
+  final ImageAppProvider imageAppProvider;
 
-  const _titleFieldWidget({
-    Key? key,
-    this.title = '',
-    this.subTitle = '',
-  }) : super(key: key);
+  List<String> categories = ['Animales', 'Paisajes', 'Personajes'];
+
+  _FormWidgetState(this.imageAppProvider);
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          title!,
-          style: const TextStyle(fontSize: 18, color: Colors.purple),
-        ),
-        Text(subTitle!)
-      ],
+    String category = categories.first;
+
+    return Form(
+      key: imageAppProvider.formKey,
+      child: Column(
+        children: [
+          Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: TitleFieldWidget(
+                  title: 'Titulo',
+                  subTitle: '${imageAppProvider.title.length.toString()}/22',
+                ),
+              ),
+              TextFieldWidget(
+                keyboardType: TextInputType.text,
+                hintText: 'Paisaje del mar',
+                onChanged: (value) {
+                  imageAppProvider.title = value;
+                  setState(() {});
+                },
+                validator: (value) {
+                  return (value != null &&
+                          value.length >= 4 &&
+                          value.length <= 22)
+                      ? null
+                      : 'El titulo debe tener entre 4 y 22 caracteres.';
+                },
+              ),
+              const Padding(
+                padding: EdgeInsets.only(top: 10, bottom: 10),
+                child: TitleFieldWidget(title: 'Categoria'),
+              ),
+              SizedBox(
+                width: double.infinity,
+                child: DropdownButtonFormField(
+                    isExpanded: true,
+                    value: category,
+                    decoration: decorationField(),
+                    style: const TextStyle(color: Colors.black45),
+                    dropdownColor: Colors.purple.shade100,
+                    items: categories
+                        .map((e) => DropdownMenuItem(
+                              value: e,
+                              child: Text(
+                                e,
+                                style: const TextStyle(
+                                    color: Colors.black45, fontSize: 18),
+                              ),
+                            ))
+                        .toList(),
+                    onChanged: (value) {
+                      imageAppProvider.category = value!;
+                      setState(() {
+                        category = value;
+                      });
+                    }),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 10, bottom: 10),
+                child: TitleFieldWidget(
+                  title: 'Descripción',
+                  subTitle:
+                      '${imageAppProvider.description.length.toString()}/220',
+                ),
+              ),
+              TextFieldWidget(
+                maxLines: 4,
+                keyboardType: TextInputType.multiline,
+                hintText: 'Paisaje del mar en Ica',
+                onChanged: (value) {
+                  imageAppProvider.description = value;
+                  setState(() {});
+                },
+                validator: (value) {
+                  return (value != null && value.length <= 220)
+                      ? null
+                      : 'La descripcion debe ser menor de 220 caracteres';
+                },
+              ),
+            ],
+          )
+        ],
+      ),
     );
   }
 }

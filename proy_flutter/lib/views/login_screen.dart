@@ -43,8 +43,9 @@ class _loginScreenState extends State<loginScreen> {
                 children: [
                   SizedBox(
                     width: 300,
-                    child: Lottie.network(
-                        'https://assets3.lottiefiles.com/packages/lf20_L7YrbxFm46.json'),
+/*                     child: Lottie.network(
+                        'https://assets3.lottiefiles.com/packages/lf20_L7YrbxFm46.json'), */
+                    child: Lottie.asset('assets/register.json'),
                   ),
                   const SizedBox(
                     height: 40,

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:proy_flutter/models/image_model.dart';
+import 'package:proy_flutter/preferences/preferences.dart';
 import 'package:proy_flutter/routes/routes.dart';
 import 'package:proy_flutter/widgets/custom_Drawer.dart';
 import 'package:proy_flutter/widgets/gridimage_widget.dart';
+import 'package:proy_flutter/widgets/index.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -15,14 +18,23 @@ class _ProfileScreenState extends State<ProfileScreen>
   late TabController _tabController;
 
   List<ImageApp> images = [
-    ImageApp('1', 'assets/wallpaper.jpeg', '1.2K', '12/12/2022'),
-    ImageApp('2', 'assets/wallpaper.jpeg', '1.2K', '12/12/2022'),
-    ImageApp('3', 'assets/wallpaper.jpeg', '23', '12/10/2022'),
-    ImageApp('4', 'assets/wallpaper.jpeg', '234', '12/12/2022'),
-    ImageApp('5', 'assets/wallpaper.jpeg', '123', '12/09/2022'),
-    ImageApp('6', 'assets/wallpaper.jpeg', '123', '12/12/2022'),
-    ImageApp('7', 'assets/wallpaper.jpeg', '2K', '12/12/2022'),
+    ImageApp(
+        '1', 'https://picsum.photos/seed/picsum/200/300', '1.2K', '12/12/2022'),
+    ImageApp(
+        '2', 'https://picsum.photos/seed/picsum/200/300', '1.2K', '12/12/2022'),
+    ImageApp(
+        '3', 'https://picsum.photos/seed/picsum/200/300', '23', '12/10/2022'),
+    ImageApp(
+        '4', 'https://picsum.photos/seed/picsum/200/300', '234', '12/12/2022'),
+    ImageApp(
+        '5', 'https://picsum.photos/seed/picsum/200/300', '123', '12/09/2022'),
+    ImageApp(
+        '6', 'https://picsum.photos/seed/picsum/200/300', '123', '12/12/2022'),
+    ImageApp(
+        '7', 'https://picsum.photos/seed/picsum/200/300', '2K', '12/12/2022'),
   ];
+
+  List<ImageModel> onwImages = Preferences.imageNews;
 
   void _onTapImage(String id) {
     debugPrint('Tap image ${id}');
@@ -46,17 +58,6 @@ class _ProfileScreenState extends State<ProfileScreen>
       appBar: AppBar(
         title: const Text('Perfil'),
         centerTitle: true,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: GestureDetector(
-              onTap: () {
-                Navigator.pushReplacementNamed(context, MyRoutes.rLogin);
-              },
-              child: const Icon(Icons.logout),
-            ),
-          )
-        ],
       ),
       backgroundColor: Colors.white,
       drawer: const customDrawerW(),
@@ -70,7 +71,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                 height: 180,
                 width: double.infinity,
                 child: Image.network(
-                  'https://cdn.pixabay.com/photo/2016/10/20/18/35/earth-1756274__340.jpg',
+                  'https://picsum.photos/200/300/?blur',
                   fit: BoxFit.cover,
                 ),
               ),
@@ -82,7 +83,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                     Container(
                       decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          border: Border.all(color: Colors.white, width: 12)),
+                          border: Border.all(color: Colors.white, width: 8)),
                       child: const CircleAvatar(
                           radius: 50,
                           backgroundImage: NetworkImage(
@@ -90,11 +91,13 @@ class _ProfileScreenState extends State<ProfileScreen>
                     ),
                     const Text(
                       'Chris Yovanka',
-                      style:
-                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black),
                     ),
                     const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 5),
+                      padding: EdgeInsets.only(bottom: 5),
                       child: Text(
                         'Designer | Photographer',
                         style: TextStyle(
@@ -125,7 +128,7 @@ class _ProfileScreenState extends State<ProfileScreen>
               )
             ]),
           ),
-          Container(
+          SizedBox(
             height: 350.0,
             child: Column(
               children: [
@@ -134,7 +137,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                     indicatorColor: Colors.purple,
                     tabs: const [
                       Tab(
-                        text: 'Diseños',
+                        text: 'Tus Imagenes',
                       ),
                       Tab(
                         text: 'Favoritos',
@@ -143,9 +146,9 @@ class _ProfileScreenState extends State<ProfileScreen>
                     controller: _tabController),
                 Expanded(
                   child: TabBarView(controller: _tabController, children: [
+                    GridImageLocalWidget(images: onwImages),
                     GridImageWidget(
                         images: images, onTapImage: (id) => _onTapImage(id)),
-                    Text('Favoritos'),
                   ]),
                 ),
               ],

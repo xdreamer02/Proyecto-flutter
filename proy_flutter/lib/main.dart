@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 import 'package:proy_flutter/preferences/preferences.dart';
-import 'package:proy_flutter/providers/login_provider.dart';
-import 'package:proy_flutter/providers/theme_provider.dart';
+import 'package:proy_flutter/providers/index.dart';
 import 'package:proy_flutter/routes/routes.dart';
 import 'package:proy_flutter/services/index.dart';
 
@@ -18,7 +18,9 @@ void main() async {
       ChangeNotifierProvider(
         create: (_) => LoginProvider(),
       ),
-      ChangeNotifierProvider(create: (_) => AuthService())
+      ChangeNotifierProvider(create: (_) => AuthService()),
+      ChangeNotifierProvider(create: (_) => ImageAppProvider()),
+      ChangeNotifierProvider(create: (_) => GalleryService()),
     ],
     child: const MyApp(),
   ));
@@ -37,6 +39,7 @@ class MyApp extends StatelessWidget {
       scaffoldMessengerKey: MsgAuth.msgKEY,
       onGenerateRoute: MyRoutes.generateRoute,
       initialRoute: MyRoutes.rVerify,
+      builder: EasyLoading.init(),
       //home: const HomePage(),
     );
   }

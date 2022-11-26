@@ -27,15 +27,6 @@ class GridImageWidget extends StatelessWidget {
       mainAxisSpacing: 4,
       crossAxisSpacing: 4,
       crossAxisCount: 2,
-/*       children: [
-        ImageWidget(),
-        ImageWidget(),
-        ImageWidget(),
-        ImageWidget(),
-        ImageWidget(),
-        ImageWidget(),
-        ImageWidget(),
-      ], */
       children: images
           .map((e) => ImageWidget(
                 date: e.date,
@@ -56,7 +47,7 @@ class ImageWidget extends StatelessWidget {
 
   const ImageWidget({
     Key? key,
-    this.url = 'assets/wallpaper.jpeg',
+    this.url = 'https://picsum.photos/200/300',
     this.favorites = '1.12K',
     this.date = '12/12/2022',
     this.onTap,
@@ -90,7 +81,7 @@ class ImageWidget extends StatelessWidget {
       ),
       child: InkResponse(
         onTap: () => onTap!(),
-        child: Image.asset(
+        child: Image.network(
           url!,
           height: 200,
           fit: BoxFit.cover,
