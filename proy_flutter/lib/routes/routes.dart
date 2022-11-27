@@ -6,10 +6,10 @@ class MyRoutes {
   static const String rAjuste = '/ajuste';
   static const String rPerfil = '/perfil';
   static const String rLogin = '/login';
-
   static const String rRegister = '/register';
   static const String rUpload = '/upload';
   static const String rVerify = '/verify';
+  static const String rDetalles = '/details';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -27,6 +27,9 @@ class MyRoutes {
         return MaterialPageRoute(builder: (_) => const UploadScreen());
       case ('/verify'):
         return MaterialPageRoute(builder: (_) => const VerifyAuthScreen());
+      case ('/details'):
+        return MaterialPageRoute(builder: (_) => const VerifyAuthScreen());
+
       default:
         return MaterialPageRoute(builder: (_) => const HomePage());
     }

@@ -7,6 +7,7 @@ import 'package:proy_flutter/preferences/preferences.dart';
 import 'package:proy_flutter/providers/index.dart';
 import 'package:proy_flutter/routes/routes.dart';
 import 'package:proy_flutter/services/index.dart';
+import 'package:proy_flutter/views/index.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -41,7 +42,10 @@ class MyApp extends StatelessWidget {
       theme: Provider.of<ThemeProvider>(context).currentTheme,
       scaffoldMessengerKey: MsgAuth.msgKEY,
       onGenerateRoute: MyRoutes.generateRoute,
-      initialRoute: MyRoutes.rVerify,
+      initialRoute: MyRoutes.rLogin,
+      routes: {
+        'detalle': (BuildContext context) => DetalleImg(),
+      },
       builder: EasyLoading.init(),
       //home: const HomePage(),
     );

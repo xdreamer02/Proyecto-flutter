@@ -5,6 +5,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:proy_flutter/models/image_model.dart';
 import 'package:proy_flutter/preferences/preferences.dart';
 import 'package:proy_flutter/widgets/index.dart';
+import 'package:proy_flutter/routes/routes.dart';
+import 'package:proy_flutter/views/detalle_img.dart';
 
 class WallPage extends StatefulWidget {
   const WallPage({super.key});
@@ -100,7 +102,7 @@ class _WallPageState extends State<WallPage> {
         Padding(
           padding: const EdgeInsets.all(20.0),
           child: Container(
-            height: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height * 0.8,
             width: double.infinity,
             child: GridView.builder(
                 gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
@@ -110,14 +112,23 @@ class _WallPageState extends State<WallPage> {
                     mainAxisSpacing: 10),
                 itemCount: images.length,
                 itemBuilder: (BuildContext ctx, index) {
-                  return ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
-                    child: Container(
-                      child: FadeInImage(
-                        placeholder: AssetImage('assets/loading.gif'),
-                        image: NetworkImage(
-                            'https://picsum.photos/200/300?=${images[index]}'),
-                        fit: BoxFit.cover,
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, 'detalle',
+                          arguments: images[index]);
+                    },
+                    child: Hero(
+                      tag: images[index],
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: Container(
+                          child: FadeInImage(
+                            placeholder: AssetImage('assets/loading.gif'),
+                            image: NetworkImage(
+                                'https://picsum.photos/350/550?=${images[index]}'),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
                       ),
                     ),
                   );
@@ -129,7 +140,7 @@ class _WallPageState extends State<WallPage> {
   }
 
   void _agregarElements() {
-    for (var i = 0; i < 30; i++) {
+    for (var i = 0; i < 50; i++) {
       _lastItem++;
 
       images.add(_lastItem);
