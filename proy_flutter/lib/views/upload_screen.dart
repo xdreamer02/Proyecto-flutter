@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:proy_flutter/models/image_model.dart';
+import 'package:proy_flutter/preferences/preferences.dart';
 import 'package:proy_flutter/providers/index.dart';
 import 'package:proy_flutter/services/index.dart';
 import 'package:proy_flutter/widgets/index.dart';
@@ -124,73 +125,86 @@ class _UploadScreenState extends State<UploadScreen> {
         centerTitle: true,
       ),
       drawer: const customDrawerW(),
-      body: Center(
-        child: Stepper(
-          type: StepperType.horizontal,
-          currentStep: currentStep,
-          onStepCancel: () => currentStep == 0
-              ? null
-              : setState((() {
-                  currentStep -= 1;
-                })),
-          onStepContinue: () {
-            bool isLastStep = (currentStep == 1);
+      body: GestureDetector(
+        onTap: () {
+          final FocusScopeNode focus = FocusScope.of(context);
+          if (!focus.hasPrimaryFocus && focus.hasFocus) {
+            FocusManager.instance.primaryFocus!.unfocus();
+          }
+        },
+        child: Center(
+          child: Stepper(
+            type: StepperType.horizontal,
+            currentStep: currentStep,
+            onStepCancel: () => currentStep == 0
+                ? null
+                : setState((() {
+                    currentStep -= 1;
+                  })),
+            onStepContinue: () {
+              bool isLastStep = (currentStep == 1);
 
-            if (isLastStep) {
-              imageAppProvider.isLoading ? null : saveImage(imageAppProvider);
-            } else {
-              if (image == null) {
-                MsgAuth.verSnackbarStateColor(
-                    msg: 'Necesitar seleccionar una imagen para continuar',
-                    color: Colors.red);
+              if (isLastStep) {
+                imageAppProvider.isLoading ? null : saveImage(imageAppProvider);
               } else {
-                setState(() {
-                  currentStep += 1;
-                });
+                if (image == null) {
+                  MsgAuth.verSnackbarStateColor(
+                      msg: 'Necesitar seleccionar una imagen para continuar',
+                      color: Colors.red);
+                } else {
+                  setState(() {
+                    currentStep += 1;
+                  });
+                }
               }
-            }
-          },
-          onStepTapped: (value) => setState(() {
-            currentStep = value;
-          }),
-          controlsBuilder: (context, details) {
-            bool isLastStep = (currentStep == 1);
-            return Padding(
-              padding: const EdgeInsets.only(top: 8),
-              child: Row(
-                children: [
-                  TextButton(
-                      onPressed: details.onStepContinue,
-                      child: Text(
-                          imageAppProvider.isLoading
-                              ? 'Cargando ...'
-                              : isLastStep
-                                  ? 'Terminar'
-                                  : 'Continuar',
-                          style: const TextStyle(
-                              fontSize: 18, color: Colors.purple))),
-                  TextButton(
-                      onPressed: details.onStepCancel,
-                      child: const Text('Cancelar',
-                          style:
-                              TextStyle(fontSize: 18, color: Colors.purple))),
-                ],
-              ),
-            );
-          },
-          steps: [
-            Step(
-                title: const Text('Imagen'),
-                state: currentStep > 0 ? StepState.complete : StepState.indexed,
-                content: SizedBox(height: 400, child: _pickImageWidget())),
-            Step(
-                title: const Text('Datos'),
-                state: currentStep > 1 ? StepState.complete : StepState.indexed,
-                isActive: currentStep >= 1,
-                content: _FormWidget(
-                  imageAppProvider: imageAppProvider,
-                ))
-          ],
+            },
+            onStepTapped: (value) => setState(() {
+              currentStep = value;
+            }),
+            controlsBuilder: (context, details) {
+              bool isLastStep = (currentStep == 1);
+              return Padding(
+                padding: const EdgeInsets.only(top: 8),
+                child: Row(
+                  children: [
+                    TextButton(
+                        onPressed: details.onStepContinue,
+                        child: Text(
+                            imageAppProvider.isLoading
+                                ? 'Guardando ...'
+                                : isLastStep
+                                    ? 'Terminar'
+                                    : 'Continuar',
+                            style: const TextStyle(
+                                fontSize: 18, color: Colors.purple))),
+                    TextButton(
+                        onPressed: details.onStepCancel,
+                        child: Text('Cancelar',
+                            style: TextStyle(
+                                fontSize: 18,
+                                color: Preferences.theme
+                                    ? Colors.white
+                                    : Colors.black45))),
+                  ],
+                ),
+              );
+            },
+            steps: [
+              Step(
+                  title: const Text('Imagen'),
+                  state:
+                      currentStep > 0 ? StepState.complete : StepState.indexed,
+                  content: SizedBox(height: 400, child: _pickImageWidget())),
+              Step(
+                  title: const Text('Datos'),
+                  state:
+                      currentStep > 1 ? StepState.complete : StepState.indexed,
+                  isActive: currentStep >= 1,
+                  content: _FormWidget(
+                    imageAppProvider: imageAppProvider,
+                  ))
+            ],
+          ),
         ),
       ),
     );

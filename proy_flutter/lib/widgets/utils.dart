@@ -8,7 +8,7 @@ InputDecoration decorationField({String? hintText}) {
     hintText: hintText,
     hintStyle: GoogleFonts.montserrat(color: Colors.grey),
     enabledBorder: OutlineInputBorder(
-        borderSide: const BorderSide(width: 2, color: Colors.black),
+        borderSide: const BorderSide(width: 2, color: Colors.black38),
         borderRadius: BorderRadius.circular(15)),
     focusedBorder: OutlineInputBorder(
         borderSide: const BorderSide(width: 2, color: Colors.purple),

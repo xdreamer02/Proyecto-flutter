@@ -87,11 +87,7 @@ class customDrawerW extends StatelessWidget {
                         color: Colors.black.withOpacity(0.5)),
                   ),
                   onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const HomePage(),
-                        ));
+                    Navigator.pushReplacementNamed(context, MyRoutes.rHome);
                   },
                 ),
                 ListTile(
@@ -210,11 +206,7 @@ class customDrawerW extends StatelessWidget {
                         color: Colors.black.withOpacity(0.5)),
                   ),
                   onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const ConfigPage(),
-                        ));
+                    Navigator.pushReplacementNamed(context, MyRoutes.rAjuste);
                   },
                 ),
               ],
