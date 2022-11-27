@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
       theme: Provider.of<ThemeProvider>(context).currentTheme,
       scaffoldMessengerKey: MsgAuth.msgKEY,
       onGenerateRoute: MyRoutes.generateRoute,
-      initialRoute: MyRoutes.rLogin,
+      initialRoute: MyRoutes.rVerify,
       routes: {
         'detalle': (BuildContext context) => DetalleImg(),
       },
