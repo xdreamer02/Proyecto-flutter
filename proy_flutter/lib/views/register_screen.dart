@@ -38,8 +38,7 @@ class registerScreen extends StatelessWidget {
                   children: [
                     SizedBox(
                       width: 500,
-                      child: Lottie.network(
-                          'https://assets3.lottiefiles.com/packages/lf20_jcikwtux.json'),
+                      child: Lottie.asset('assets/register.json'),
                     ),
                     const SizedBox(
                       height: 20,

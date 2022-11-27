@@ -7,3 +7,4 @@ export 'package:proy_flutter/views/config.dart';
 export 'package:proy_flutter/views/home.dart';
 export 'package:proy_flutter/views/category.dart';
 export 'package:proy_flutter/views/wall_home.dart';
+export 'package:proy_flutter/views/detalle_img.dart';
