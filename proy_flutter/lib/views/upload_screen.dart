@@ -88,6 +88,8 @@ class _UploadScreenState extends State<UploadScreen> {
 
       final id = await service.save(imageModel);
 
+      imageAppProvider.clear();
+
       print('db: $id');
 
       EasyLoading.dismiss();
@@ -95,6 +97,11 @@ class _UploadScreenState extends State<UploadScreen> {
       imageAppProvider.isLoading = false;
 
       MsgAuth.verSnackbarStateColor(msg: response!, color: Colors.green);
+
+      setState(() {
+        currentStep = 0;
+        image = null;
+      });
     } catch (e) {
       EasyLoading.dismiss();
 

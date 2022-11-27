@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:proy_flutter/models/image_model.dart';
 import 'package:proy_flutter/preferences/preferences.dart';
+import 'package:proy_flutter/widgets/index.dart';
 
 class WallPage extends StatefulWidget {
   const WallPage({super.key});
@@ -52,27 +53,7 @@ class _WallPageState extends State<WallPage> {
                 const SizedBox(
                   height: 10,
                 ),
-                SizedBox(
-                  height: 120,
-                  child: ListView.builder(
-                      itemCount: imageNews.length,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: ((context, index) => Padding(
-                            padding: const EdgeInsets.only(right: 8.0),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(20),
-                              child: SizedBox(
-                                width: 200,
-                                child: FadeInImage(
-                                  placeholder:
-                                      const AssetImage('assets/loading.gif'),
-                                  image: FileImage(File(imageNews[index].path)),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                          ))),
-                ),
+                const ListImageFirestore(),
                 const SizedBox(
                   height: 10,
                 ),

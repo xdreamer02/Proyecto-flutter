@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:proy_flutter/models/image_model.dart';
 import 'package:proy_flutter/preferences/preferences.dart';
-import 'package:proy_flutter/routes/routes.dart';
-import 'package:proy_flutter/widgets/custom_Drawer.dart';
 import 'package:proy_flutter/widgets/gridimage_widget.dart';
 import 'package:proy_flutter/widgets/index.dart';
 
@@ -17,21 +15,42 @@ class _ProfileScreenState extends State<ProfileScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
-  List<ImageApp> images = [
-    ImageApp(
-        '1', 'https://picsum.photos/seed/picsum/200/300', '1.2K', '12/12/2022'),
-    ImageApp(
-        '2', 'https://picsum.photos/seed/picsum/200/300', '1.2K', '12/12/2022'),
-    ImageApp(
-        '3', 'https://picsum.photos/seed/picsum/200/300', '23', '12/10/2022'),
-    ImageApp(
-        '4', 'https://picsum.photos/seed/picsum/200/300', '234', '12/12/2022'),
-    ImageApp(
-        '5', 'https://picsum.photos/seed/picsum/200/300', '123', '12/09/2022'),
-    ImageApp(
-        '6', 'https://picsum.photos/seed/picsum/200/300', '123', '12/12/2022'),
-    ImageApp(
-        '7', 'https://picsum.photos/seed/picsum/200/300', '2K', '12/12/2022'),
+  List<ImageModel> images = [
+    ImageModel(
+        path: 'https://picsum.photos/200/300?=1',
+        favorites: '1.2K',
+        title: '',
+        description: ''),
+    ImageModel(
+        path: 'https://picsum.photos/200/300?=2',
+        favorites: '1.2K',
+        title: '',
+        description: ''),
+    ImageModel(
+        path: 'https://picsum.photos/200/300?=3',
+        favorites: '23',
+        title: '',
+        description: ''),
+    ImageModel(
+        path: 'https://picsum.photos/200/300?=4',
+        favorites: '234',
+        title: '',
+        description: ''),
+    ImageModel(
+        path: 'https://picsum.photos/200/300?=5',
+        favorites: '123',
+        title: '',
+        description: ''),
+    ImageModel(
+        path: 'https://picsum.photos/200/300?=6',
+        favorites: '123',
+        title: '',
+        description: ''),
+    ImageModel(
+        path: 'https://picsum.photos/200/300?=7',
+        favorites: '2K',
+        title: '',
+        description: ''),
   ];
 
   List<ImageModel> onwImages = Preferences.imageNews;
@@ -72,7 +91,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                 width: double.infinity,
                 child: Image.network(
                   'https://picsum.photos/200/300/?blur',
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fill,
                 ),
               ),
               Positioned(
@@ -146,7 +165,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                     controller: _tabController),
                 Expanded(
                   child: TabBarView(controller: _tabController, children: [
-                    GridImageLocalWidget(images: onwImages),
+                    const GridImageFirestoreWidget(),
                     GridImageWidget(
                         images: images, onTapImage: (id) => _onTapImage(id)),
                   ]),

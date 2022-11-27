@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:proy_flutter/models/image_model.dart';
 
 class ImageAppProvider extends ChangeNotifier {
   String title = '';
@@ -7,8 +6,6 @@ class ImageAppProvider extends ChangeNotifier {
   String description = '';
   String date = '';
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
-  List<ImageModel> images = [];
 
   bool _isLoading = false;
 
@@ -21,5 +18,12 @@ class ImageAppProvider extends ChangeNotifier {
 
   bool isValidForm() {
     return formKey.currentState?.validate() ?? false;
+  }
+
+  void clear() {
+    title = '';
+    category = '';
+    description = '';
+    date = '';
   }
 }

@@ -32,6 +32,10 @@ class GalleryService extends ChangeNotifier {
 
     final fullPath = await _saveImage(imageModel.path, doc.id);
 
+    image["path"] = fullPath;
+
+    db.collection('images').doc(doc.id).update(image);
+
     print('image fullpath: $fullPath');
 
     return doc.id;
@@ -47,10 +51,16 @@ class GalleryService extends ChangeNotifier {
     final uploadTask =
         await storageRef.child('images/$id.jpg').putFile(file, metadata);
 
-    final donwloadUrl = await uploadTask.ref.getDownloadURL();
+    final fullPath = await uploadTask.ref.getDownloadURL();
 
-    print('download : $donwloadUrl');
+    return fullPath;
+  }
 
-    return uploadTask.ref.fullPath;
+  Future<QuerySnapshot<Map<String, dynamic>>> read() async {
+    final db = FirebaseFirestore.instance;
+
+    final images = db.collection('images').get();
+
+    return images;
   }
 }
