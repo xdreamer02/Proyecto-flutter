@@ -15,7 +15,7 @@ class _CarruselPageState extends State<CarruselPage> {
     return Container(
       child: CarouselSlider(
           items: [
-            "https://picsum.photos/500/350?=2",
+            "https://picsum.photos/500/350?=82",
             "https://picsum.photos/500/350?=12",
             "https://picsum.photos/500/350?=32",
             "https://picsum.photos/500/350?=52",
