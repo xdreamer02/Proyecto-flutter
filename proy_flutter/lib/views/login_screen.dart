@@ -19,9 +19,6 @@ class _loginScreenState extends State<loginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-      ),
       body: GestureDetector(
         onTap: () {
           final FocusScopeNode focus = FocusScope.of(context);
@@ -30,20 +27,21 @@ class _loginScreenState extends State<loginScreen> {
           }
         },
         child: Center(
-          child: SingleChildScrollView(
-            child: Container(
-              height: MediaQuery.of(context).size.height * 0.99,
-              decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [Colors.red, Colors.purple, Colors.black])),
+          child: Container(
+            height: MediaQuery.of(context).size.height * 1,
+            padding: const EdgeInsets.only(bottom: 10),
+            decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [Colors.red, Colors.purple, Colors.black])),
+            child: SingleChildScrollView(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(
                     width: 300,
-/*                     child: Lottie.network(
+                    /*                     child: Lottie.network(
                         'https://assets3.lottiefiles.com/packages/lf20_L7YrbxFm46.json'), */
                     child: Lottie.asset('assets/login.json'),
                   ),
@@ -53,6 +51,32 @@ class _loginScreenState extends State<loginScreen> {
                   ChangeNotifierProvider(
                       create: (context) => LoginProvider(),
                       child: const _LoginForm()),
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  Text.rich(TextSpan(
+                      text: 'No tienes cuenta aún ',
+                      style: GoogleFonts.montserrat(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 17,
+                      ),
+                      children: [
+                        TextSpan(
+                            text: ' Registrate!',
+                            style: GoogleFonts.montserrat(
+                                color: Colors.blue,
+                                fontSize: 17,
+                                fontWeight: FontWeight.bold),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            registerScreen()));
+                              }),
+                      ]))
                 ],
               ),
             ),
@@ -106,7 +130,7 @@ class _LoginFormState extends State<_LoginForm> {
                     RegExp regExp = RegExp(caracteres);
                     return regExp.hasMatch(value ?? '')
                         ? null
-                        : 'Coreo invalido';
+                        : 'Correo invalido';
                   },
                 ),
                 const SizedBox(
@@ -188,31 +212,6 @@ class _LoginFormState extends State<_LoginForm> {
                           ),
                   ),
                 ),
-                const SizedBox(
-                  height: 50,
-                ),
-                Text.rich(TextSpan(
-                    text: 'No tienes cuenta aún ',
-                    style: GoogleFonts.montserrat(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 17,
-                    ),
-                    children: [
-                      TextSpan(
-                          text: ' Registrate!',
-                          style: GoogleFonts.montserrat(
-                              color: Colors.blue,
-                              fontSize: 17,
-                              fontWeight: FontWeight.bold),
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => registerScreen()));
-                            }),
-                    ]))
               ],
             ),
           )),
@@ -226,6 +225,7 @@ InputDecoration _buildDecoration({
   final Widget? suffixIcon,
 }) {
   return InputDecoration(
+      errorStyle: const TextStyle(fontSize: 15, color: Colors.white60),
       enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(width: 2, color: Colors.black),
           borderRadius: BorderRadius.circular(15)),

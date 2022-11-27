@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
@@ -12,10 +13,6 @@ class registerScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Registrar'),
-        centerTitle: true,
-      ),
       body: GestureDetector(
         onTap: () {
           final FocusScopeNode focus = FocusScope.of(context);
@@ -23,42 +20,43 @@ class registerScreen extends StatelessWidget {
             FocusManager.instance.primaryFocus!.unfocus();
           }
         },
-        child: SingleChildScrollView(
-          child: Container(
-            height: MediaQuery.of(context).size.height * 0.99,
-            decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [Colors.black, Colors.purple, Colors.red])),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    SizedBox(
-                      width: 500,
-                      child: Lottie.asset('assets/register.json'),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    ChangeNotifierProvider(
-                        create: (context) => LoginProvider(), child: _form()),
-                    TextButton(
-                        onPressed: () {
-                          Navigator.pushReplacementNamed(
-                              context, MyRoutes.rLogin);
-                        },
-                        child: Text(
-                          'Iniciar Sesion',
+        child: Container(
+          height: MediaQuery.of(context).size.height * 1,
+          decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [Colors.black, Colors.purple, Colors.red])),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  SizedBox(
+                    width: 500,
+                    child: Lottie.asset('assets/register.json'),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  ChangeNotifierProvider(
+                      create: (context) => LoginProvider(),
+                      child: const _form()),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  TextButton(
+                      child: Text(' Iniciar Sesion',
                           style: GoogleFonts.montserrat(
-                              color: Colors.blue,
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold),
-                        ))
-                  ],
-                ),
+                            color: Colors.blue,
+                            fontSize: 17,
+                            fontWeight: FontWeight.bold,
+                          )),
+                      onPressed: () {
+                        Navigator.pushReplacementNamed(
+                            context, MyRoutes.rLogin);
+                      }),
+                ],
               ),
             ),
           ),
@@ -169,7 +167,7 @@ class __formState extends State<_form> {
                           if (errorMessage == null) {
                             // ignore: use_build_context_synchronously
                             Navigator.pushReplacementNamed(
-                                context, MyRoutes.rLogin);
+                                context, MyRoutes.rHome);
                           } else {
                             debugPrint(errorMessage);
                             loginProvider.isLoading = false;
@@ -185,7 +183,7 @@ class __formState extends State<_form> {
                               color: Colors.white, fontWeight: FontWeight.bold),
                         ),
                 ),
-              )
+              ),
             ],
           )),
     );
@@ -198,6 +196,7 @@ InputDecoration _buildDecoration({
   final Widget? suffixIcon,
 }) {
   return InputDecoration(
+      errorStyle: const TextStyle(fontSize: 15, color: Colors.white60),
       enabledBorder: OutlineInputBorder(
           borderSide: const BorderSide(width: 2, color: Colors.purple),
           borderRadius: BorderRadius.circular(15)),
