@@ -125,6 +125,7 @@ class _UploadScreenState extends State<UploadScreen> {
         centerTitle: true,
       ),
       drawer: const customDrawerW(),
+      backgroundColor: Preferences.theme ? Colors.black54 : Colors.white,
       body: GestureDetector(
         onTap: () {
           final FocusScopeNode focus = FocusScope.of(context);
@@ -183,7 +184,7 @@ class _UploadScreenState extends State<UploadScreen> {
                             style: TextStyle(
                                 fontSize: 18,
                                 color: Preferences.theme
-                                    ? Colors.white
+                                    ? Colors.white60
                                     : Colors.black45))),
                   ],
                 ),
@@ -224,16 +225,20 @@ class _UploadScreenState extends State<UploadScreen> {
                 },
               )
             : DottedBorder(
-                color: Colors.black45,
+                color: Preferences.theme ? Colors.white70 : Colors.black45,
                 dashPattern: const [6, 3, 2, 3],
                 radius: const Radius.circular(10),
                 padding:
                     const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
                 child: Column(
                   children: [
-                    const Text(
+                    Text(
                       "No hay imagen para mostrar",
-                      style: TextStyle(fontSize: 20, color: Colors.black45),
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: Preferences.theme
+                              ? Colors.white70
+                              : Colors.black45),
                     ),
                     const Icon(
                       Icons.image,
@@ -315,15 +320,23 @@ class _FormWidgetState extends State<_FormWidget> {
                     isExpanded: true,
                     value: category,
                     decoration: decorationField(),
-                    style: const TextStyle(color: Colors.black45),
-                    dropdownColor: Colors.purple.shade100,
+                    style: TextStyle(
+                        color: Preferences.theme
+                            ? Colors.white60
+                            : Colors.black45),
+                    dropdownColor: Preferences.theme
+                        ? Colors.black87
+                        : Colors.purple.shade100,
                     items: categories
                         .map((e) => DropdownMenuItem(
                               value: e,
                               child: Text(
                                 e,
-                                style: const TextStyle(
-                                    color: Colors.black45, fontSize: 18),
+                                style: TextStyle(
+                                    color: Preferences.theme
+                                        ? Colors.white60
+                                        : Colors.black45,
+                                    fontSize: 18),
                               ),
                             ))
                         .toList(),

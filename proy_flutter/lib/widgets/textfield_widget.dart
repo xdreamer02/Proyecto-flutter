@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:proy_flutter/preferences/preferences.dart';
 import 'package:proy_flutter/widgets/utils.dart';
 
 class TextFieldWidget extends StatelessWidget {
@@ -24,7 +25,9 @@ class TextFieldWidget extends StatelessWidget {
       onChanged: ((value) => onChanged!(value)),
       validator: (value) => validator!(value),
       keyboardType: keyboardType,
-      style: const TextStyle(color: Colors.black54, fontSize: 18),
+      style: TextStyle(
+          color: Preferences.theme ? Colors.grey : Colors.black54,
+          fontSize: 18),
       decoration: decorationField(hintText: hintText),
     );
   }

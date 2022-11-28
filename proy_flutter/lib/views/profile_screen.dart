@@ -78,7 +78,7 @@ class _ProfileScreenState extends State<ProfileScreen>
         title: const Text('Perfil'),
         centerTitle: true,
       ),
-      backgroundColor: Colors.white,
+      backgroundColor: Preferences.theme ? Colors.black54 : Colors.white,
       drawer: const customDrawerW(),
       extendBodyBehindAppBar: true,
       body: ListView(
@@ -108,29 +108,34 @@ class _ProfileScreenState extends State<ProfileScreen>
                           backgroundImage: NetworkImage(
                               'https://cdn.pixabay.com/photo/2016/11/21/12/42/beard-1845166_960_720.jpg')),
                     ),
-                    const Text(
+                    Text(
                       'Chris Yovanka',
                       style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
-                          color: Colors.black),
+                          color:
+                              Preferences.theme ? Colors.white : Colors.black),
                     ),
-                    const Padding(
-                      padding: EdgeInsets.only(bottom: 5),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 5),
                       child: Text(
                         'Designer | Photographer',
                         style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
-                            color: Colors.black45),
+                            color: Preferences.theme
+                                ? Colors.white70
+                                : Colors.black45),
                       ),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
+                      children: [
                         Icon(
                           Icons.location_on,
-                          color: Colors.black45,
+                          color: Preferences.theme
+                              ? Colors.white70
+                              : Colors.black45,
                           size: 18,
                         ),
                         Text(
@@ -138,7 +143,9 @@ class _ProfileScreenState extends State<ProfileScreen>
                           style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
-                              color: Colors.black45),
+                              color: Preferences.theme
+                                  ? Colors.white70
+                                  : Colors.black45),
                         ),
                       ],
                     ),
@@ -152,7 +159,7 @@ class _ProfileScreenState extends State<ProfileScreen>
             child: Column(
               children: [
                 TabBar(
-                    labelColor: Colors.black,
+                    labelColor: Preferences.theme ? Colors.white : Colors.black,
                     indicatorColor: Colors.purple,
                     tabs: const [
                       Tab(

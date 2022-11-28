@@ -6,7 +6,11 @@ class ThemeProvider extends ChangeNotifier {
   ThemeProvider({required bool isDarkMode})
       : currentTheme = isDarkMode
             ? ThemeData(
-                useMaterial3: true, colorScheme: const ColorScheme.dark())
+                useMaterial3: true,
+                colorScheme: const ColorScheme.dark(
+                  background: Colors.blue,
+                  primary: Colors.blue,
+                ))
             : ThemeData(
                 useMaterial3: true, colorScheme: const ColorScheme.light());
 

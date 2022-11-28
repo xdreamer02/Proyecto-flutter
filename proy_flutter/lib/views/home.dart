@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:proy_flutter/preferences/preferences.dart';
 import 'package:proy_flutter/routes/routes.dart';
 import 'package:proy_flutter/services/auth_service.dart';
 import 'package:proy_flutter/widgets/custom_Drawer.dart';
@@ -45,9 +46,9 @@ class _HomePageState extends State<HomePage>
                 authService.logout();
                 Navigator.pushReplacementNamed(context, MyRoutes.rLogin);
               },
-              icon: const Icon(
+              icon: Icon(
                 Icons.logout,
-                color: Colors.red,
+                color: Preferences.theme ? Colors.white : Colors.red,
               ))
         ],
       ),
@@ -57,7 +58,7 @@ class _HomePageState extends State<HomePage>
           Material(
             child: TabBar(
               indicatorColor: Colors.green,
-              labelColor: Colors.black,
+              labelColor: Preferences.theme ? Colors.white : Colors.black,
               controller: _controlller,
               tabs: [
                 Tab(
@@ -80,7 +81,7 @@ class _HomePageState extends State<HomePage>
                   width: MediaQuery.of(context).size.width,
                   color: Colors.black,
                   child: const WallPage()),
-              categoryScreen()
+              const categoryScreen()
             ]),
           )
         ],

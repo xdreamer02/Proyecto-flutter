@@ -14,7 +14,7 @@ class ListImageFirestore extends StatelessWidget {
             return const Center(
               child: Text(
                 'No hay imagenes nuevas',
-                style: TextStyle(color: Colors.black),
+                style: TextStyle(color: Colors.white),
               ),
             );
           }

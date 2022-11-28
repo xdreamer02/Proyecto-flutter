@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:proy_flutter/preferences/preferences.dart';
 import 'package:proy_flutter/routes/routes.dart';
 import 'package:proy_flutter/views/config.dart';
 import 'package:proy_flutter/views/home.dart';
@@ -12,7 +13,6 @@ class customDrawerW extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.black,
       width: MediaQuery.of(context).size.width * 0.8,
       child: Drawer(
         child: ListView(
@@ -81,10 +81,7 @@ class customDrawerW extends StatelessWidget {
                   ),
                   title: Text(
                     'Fondos de Pantalla',
-                    style: GoogleFonts.montserrat(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black.withOpacity(0.5)),
+                    style: styleListTile(),
                   ),
                   onTap: () {
                     Navigator.pushReplacementNamed(context, MyRoutes.rHome);
@@ -98,10 +95,7 @@ class customDrawerW extends StatelessWidget {
                   ),
                   title: Text(
                     'Sube tus imagenes',
-                    style: GoogleFonts.montserrat(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black.withOpacity(0.5)),
+                    style: styleListTile(),
                   ),
                   onTap: () {
                     Navigator.pushNamedAndRemoveUntil(
@@ -127,7 +121,9 @@ class customDrawerW extends StatelessWidget {
                     style: GoogleFonts.montserrat(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
-                        color: Colors.black.withOpacity(0.7)),
+                        color: Preferences.theme
+                            ? Colors.white
+                            : Colors.black.withOpacity(0.7)),
                   ),
                   onTap: () {},
                 ),
@@ -139,29 +135,11 @@ class customDrawerW extends StatelessWidget {
                   ),
                   title: Text(
                     'Mi Perfil',
-                    style: GoogleFonts.montserrat(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black.withOpacity(0.5)),
+                    style: styleListTile(),
                   ),
                   onTap: () {
                     Navigator.pushReplacementNamed(context, MyRoutes.rPerfil);
                   },
-                ),
-                ListTile(
-                  leading: const Icon(
-                    Icons.favorite,
-                    size: 30,
-                    color: Colors.grey,
-                  ),
-                  title: Text(
-                    'Favoritos',
-                    style: GoogleFonts.montserrat(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black.withOpacity(0.5)),
-                  ),
-                  onTap: () {},
                 ),
                 ListTile(
                   leading: const Icon(
@@ -171,10 +149,7 @@ class customDrawerW extends StatelessWidget {
                   ),
                   title: Text(
                     'Ayuda',
-                    style: GoogleFonts.montserrat(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black.withOpacity(0.5)),
+                    style: styleListTile(),
                   ),
                   onTap: () {},
                 ),
@@ -186,10 +161,7 @@ class customDrawerW extends StatelessWidget {
                   ),
                   title: Text(
                     'Informacion',
-                    style: GoogleFonts.montserrat(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black.withOpacity(0.5)),
+                    style: styleListTile(),
                   ),
                   onTap: () {},
                 ),
@@ -201,10 +173,7 @@ class customDrawerW extends StatelessWidget {
                   ),
                   title: Text(
                     'Ajustes',
-                    style: GoogleFonts.montserrat(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black.withOpacity(0.5)),
+                    style: styleListTile(),
                   ),
                   onTap: () {
                     Navigator.pushReplacementNamed(context, MyRoutes.rAjuste);
@@ -216,5 +185,13 @@ class customDrawerW extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  TextStyle styleListTile() {
+    return GoogleFonts.montserrat(
+        fontSize: 20,
+        fontWeight: FontWeight.bold,
+        color:
+            Preferences.theme ? Colors.white70 : Colors.black.withOpacity(0.5));
   }
 }

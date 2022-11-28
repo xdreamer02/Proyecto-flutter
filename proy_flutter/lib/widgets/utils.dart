@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:proy_flutter/preferences/preferences.dart';
 
 InputDecoration decorationField({String? hintText}) {
   return InputDecoration(
     filled: true,
-    fillColor: Colors.white,
+    fillColor: Preferences.theme ? Colors.black26 : Colors.white,
     hintText: hintText,
-    hintStyle: GoogleFonts.montserrat(color: Colors.grey),
+    hintStyle: const TextStyle(color: Colors.grey),
     enabledBorder: OutlineInputBorder(
-        borderSide: const BorderSide(width: 2, color: Colors.black38),
+        borderSide: BorderSide(
+            width: Preferences.theme ? 0 : 2,
+            color: Preferences.theme ? Colors.black26 : Colors.black38),
         borderRadius: BorderRadius.circular(15)),
     focusedBorder: OutlineInputBorder(
         borderSide: const BorderSide(width: 2, color: Colors.purple),
