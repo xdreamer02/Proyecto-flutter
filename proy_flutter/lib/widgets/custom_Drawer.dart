@@ -104,7 +104,8 @@ class customDrawerW extends StatelessWidget {
                         color: Colors.black.withOpacity(0.5)),
                   ),
                   onTap: () {
-                    Navigator.pushReplacementNamed(context, MyRoutes.rUpload);
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, MyRoutes.rUpload, (route) => false);
                   },
                 ),
                 const SizedBox(

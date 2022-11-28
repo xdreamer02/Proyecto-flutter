@@ -25,7 +25,7 @@ class _ConfigPageState extends State<ConfigPage> {
                 Preferences.theme = value;
                 final themeP =
                     Provider.of<ThemeProvider>(context, listen: false);
-                value ? themeP.setClaro() : themeP.setOscuro();
+                value ? themeP.setOscuro() : themeP.setClaro();
                 setState(() {});
               }))
         ],
