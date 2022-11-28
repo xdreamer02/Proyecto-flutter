@@ -53,6 +53,7 @@ dependencies:
   firebase_storage: ^11.0.6
   image_downloader: ^0.31.0
   carousel_slider: ^4.1.1
+  settings_ui: ^2.0.2
 
 dev_dependencies:
   flutter_test:
