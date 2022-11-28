@@ -29,7 +29,7 @@ class _loginScreenState extends State<loginScreen> {
         child: Center(
           child: Container(
             height: MediaQuery.of(context).size.height * 1,
-            padding: const EdgeInsets.only(bottom: 10),
+            padding: const EdgeInsets.only(bottom: 10, top: 30),
             decoration: const BoxDecoration(
                 gradient: LinearGradient(
                     begin: Alignment.topLeft,
