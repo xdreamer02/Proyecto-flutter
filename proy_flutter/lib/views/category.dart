@@ -27,25 +27,108 @@ class _categoryScreenState extends State<categoryScreen> {
             ),
             SizedBox(
               height: 150,
-              child: ListView.builder(
-                  itemCount: 8,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: ((context, index) => Container(
-                        decoration: const BoxDecoration(
-                          color: Colors.amber,
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(25),
-                              topRight: Radius.circular(25),
-                              bottomRight: Radius.circular(25),
-                              bottomLeft: Radius.circular(25)),
-                        ),
-                        height: 150,
-                        width: 140,
-                        margin: EdgeInsets.all(5),
-                        child: Center(
-                          child: Text('Popular'),
-                        ),
-                      ))),
+              child: ListView(scrollDirection: Axis.horizontal, children: [
+                Container(
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [Colors.red, Colors.purple, Colors.blueAccent]),
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(25),
+                        topRight: Radius.circular(25),
+                        bottomRight: Radius.circular(25),
+                        bottomLeft: Radius.circular(25)),
+                  ),
+                  height: 150,
+                  width: 140,
+                  margin: EdgeInsets.all(5),
+                  child: Center(
+                    child: Text(
+                      'Navidad',
+                      style: GoogleFonts.montserrat(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
+                    ),
+                  ),
+                ),
+                Container(
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [Colors.red, Colors.purple, Colors.blueAccent]),
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(25),
+                        topRight: Radius.circular(25),
+                        bottomRight: Radius.circular(25),
+                        bottomLeft: Radius.circular(25)),
+                  ),
+                  height: 150,
+                  width: 140,
+                  margin: EdgeInsets.all(5),
+                  child: Center(
+                    child: Text(
+                      'Invierno',
+                      style: GoogleFonts.montserrat(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
+                    ),
+                  ),
+                ),
+                Container(
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [Colors.red, Colors.purple, Colors.blueAccent]),
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(25),
+                        topRight: Radius.circular(25),
+                        bottomRight: Radius.circular(25),
+                        bottomLeft: Radius.circular(25)),
+                  ),
+                  height: 150,
+                  width: 140,
+                  margin: EdgeInsets.all(5),
+                  child: Center(
+                    child: Text(
+                      'Otoño',
+                      style: GoogleFonts.montserrat(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
+                    ),
+                  ),
+                ),
+                Container(
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [Colors.red, Colors.purple, Colors.blueAccent]),
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(25),
+                        topRight: Radius.circular(25),
+                        bottomRight: Radius.circular(25),
+                        bottomLeft: Radius.circular(25)),
+                  ),
+                  height: 150,
+                  width: 140,
+                  margin: EdgeInsets.all(5),
+                  child: Center(
+                    child: Text(
+                      'Pokemon',
+                      style: GoogleFonts.montserrat(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
+                    ),
+                  ),
+                ),
+              ]),
             ),
             Text(
               'Colores',

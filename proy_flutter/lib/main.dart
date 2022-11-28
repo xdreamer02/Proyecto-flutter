@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:proy_flutter/firebase_options.dart';
 import 'package:proy_flutter/preferences/preferences.dart';
@@ -73,18 +74,29 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black.withOpacity(0.5),
-      body: SizedBox(
+      backgroundColor: Colors.black.withOpacity(0.8),
+      body: Container(
         width: double.infinity,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [Colors.red, Colors.purple, Colors.blueAccent]),
+        ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image(
-              image: AssetImage('assets/500.png'),
+              image: AssetImage('assets/icon/500.png'),
               width: 500,
+              height: 200,
+            ),
+            Text(
+              'StoreGallery',
+              style: GoogleFonts.montserrat(fontSize: 50, color: Colors.white),
             ),
             SizedBox(
-              height: 10,
+              height: 90,
             ),
             SpinKitFadingFour(
               color: Colors.white,
