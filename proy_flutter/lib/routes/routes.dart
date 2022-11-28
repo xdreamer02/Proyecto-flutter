@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:proy_flutter/main.dart';
 import 'package:proy_flutter/views/index.dart';
 
 class MyRoutes {
@@ -10,6 +11,7 @@ class MyRoutes {
   static const String rUpload = '/upload';
   static const String rVerify = '/verify';
   static const String rDetalles = '/details';
+  static const String rSplash = '/splash';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -27,8 +29,9 @@ class MyRoutes {
         return MaterialPageRoute(builder: (_) => const UploadScreen());
       case ('/verify'):
         return MaterialPageRoute(builder: (_) => const VerifyAuthScreen());
-      case ('/details'):
-        return MaterialPageRoute(builder: (_) => const VerifyAuthScreen());
+
+      case ('/splash'):
+        return MaterialPageRoute(builder: (_) => const SplashScreen());
 
       default:
         return MaterialPageRoute(builder: (_) => const HomePage());

@@ -8,6 +8,7 @@ import 'package:proy_flutter/providers/index.dart';
 import 'package:proy_flutter/routes/routes.dart';
 import 'package:proy_flutter/services/index.dart';
 import 'package:proy_flutter/views/index.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -42,12 +43,56 @@ class MyApp extends StatelessWidget {
       theme: Provider.of<ThemeProvider>(context).currentTheme,
       scaffoldMessengerKey: MsgAuth.msgKEY,
       onGenerateRoute: MyRoutes.generateRoute,
-      initialRoute: MyRoutes.rVerify,
+      initialRoute: MyRoutes.rSplash,
       routes: {
         'detalle': (BuildContext context) => DetalleImg(),
       },
       builder: EasyLoading.init(),
       //home: const HomePage(),
+    );
+  }
+}
+
+//Splash scren flutter
+class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
+
+  @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration(seconds: 3)).then((value) {
+      Navigator.pushReplacementNamed(context, MyRoutes.rVerify);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black.withOpacity(0.5),
+      body: SizedBox(
+        width: double.infinity,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image(
+              image: AssetImage('assets/500.png'),
+              width: 500,
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            SpinKitFadingFour(
+              color: Colors.white,
+              size: 100,
+            )
+          ],
+        ),
+      ),
     );
   }
 }
