@@ -79,6 +79,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       suffixIcon: IconButton(
                           onPressed: () {
                             provider.image = '';
+                            Preferences.image = '';
                             _controller.clear();
                           },
                           icon: const Icon(Icons.clear)),
@@ -98,6 +99,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               color: Colors.red);
                         } else {
                           provider.image = value;
+                          Preferences.image = value;
                         }
 
                         setState(() {
@@ -122,6 +124,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       initialValue: Preferences.name,
                       onChanged: (value) {
                         provider.name = value;
+                        Preferences.name = value;
                         setState(() {});
                       },
                       validator: (value) {
@@ -144,6 +147,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         initialValue: Preferences.profession,
                         onChanged: (value) {
                           provider.profession = value;
+                          Preferences.profession = value;
                           setState(() {});
                         },
                         validator: (value) {
@@ -165,6 +169,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         initialValue: Preferences.country,
                         onChanged: (value) {
                           provider.country = value;
+                          Preferences.country = value;
                           setState(() {});
                         },
                         validator: (value) {
@@ -198,9 +203,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
                                 final message = await service.edit(
                                     email: Preferences.email,
-                                    country: provider.country,
-                                    image: provider.image,
-                                    name: provider.name,
+                                    country: Preferences.country,
+                                    image: Preferences.image,
+                                    name: Preferences.name,
                                     profession: provider.profession);
 
                                 if (message == null) {
