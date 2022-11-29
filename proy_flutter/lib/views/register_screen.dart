@@ -182,6 +182,8 @@ class __formState extends State<_form> {
                               Preferences.profession = data["profession"];
                               Preferences.image = data["image"];
                               Preferences.country = data["country"];
+                            } else {
+                              Preferences.logout();
                             }
 
                             // ignore: use_build_context_synchronously

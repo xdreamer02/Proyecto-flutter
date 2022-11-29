@@ -208,6 +208,8 @@ class _LoginFormState extends State<_LoginForm> {
                                 Preferences.profession = data["profession"];
                                 Preferences.image = data["image"];
                                 Preferences.country = data["country"];
+                              } else {
+                                Preferences.logout();
                               }
 
                               MsgAuth.verSnackbar('Bienvenido');
