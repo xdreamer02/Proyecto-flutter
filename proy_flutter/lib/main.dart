@@ -70,7 +70,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Future.delayed(Duration(seconds: 3)).then((value) {
-      Navigator.pushReplacementNamed(context, MyRoutes.rVerify);
+      Navigator.pushReplacementNamed(context, MyRoutes.rLogin);
     });
   }
 

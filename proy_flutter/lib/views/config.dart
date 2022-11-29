@@ -17,7 +17,7 @@ class _ConfigPageState extends State<ConfigPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Configuración'),
+        title: const Text('Ajustes'),
         centerTitle: true,
         actions: [
           Switch.adaptive(
@@ -38,21 +38,21 @@ class _ConfigPageState extends State<ConfigPage> {
           tiles: <SettingsTile>[
             SettingsTile.navigation(
               leading: Icon(Icons.language),
-              title: Text('Language'),
+              title: Text('Lenguaje'),
               value: Text('Español'),
             ),
           
              SettingsTile.navigation(
               leading: Icon(Icons.cloud_outlined),
-              title: Text('Environment'),
-              value: Text('Production'),
+              title: Text('Ambiente'),
+              value: Text('Producción'),
              
             ),
               SettingsTile.navigation(
              
               leading: Icon(Icons.devices_other),
-              title: Text('Platform'),
-              value: Text('Default'),
+              title: Text('Plataforma'),
+              value: Text('Por defecto'),
           
              
         
@@ -63,7 +63,7 @@ class _ConfigPageState extends State<ConfigPage> {
               onToggle: (value) {},
               initialValue: true,
               leading: Icon(Icons.notifications_on),
-              title: Text('Enable notifications'),
+              title: Text('Activar notificaciones'),
              
               
             ),
@@ -72,13 +72,13 @@ title: Text('Account', style: TextStyle(color: Colors.lightBlue, fontSize: 15),)
            ),
               SettingsTile.navigation(
               leading: Icon(Icons.phone),
-              title: Text('Phone number'),
+              title: Text('Número de celular'),
               
              
             ),
                SettingsTile.navigation(
               leading: Icon(Icons.email),
-              title: Text('Email'),
+              title: Text('Correo'),
                ),
             
               SettingsTile(
@@ -89,13 +89,13 @@ title: Text('Security', style: TextStyle(color: Colors.lightBlue, fontSize: 15),
               onToggle: (value) {},
               initialValue: true,
               leading: Icon(Icons.lock),
-              title: Text('Change password'),
+              title: Text('Cambio de contraseña'),
               ),
               SettingsTile.switchTile(
               onToggle: (value) {},
               initialValue: false,
               leading: Icon(Icons.fingerprint),
-              title: Text('Use fingerprint'),
+              title: Text('Huella dactilar'),
               ),
               
             

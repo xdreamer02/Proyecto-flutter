@@ -153,7 +153,9 @@ class customDrawerW extends StatelessWidget {
                     'Ayuda',
                     style: styleListTile(),
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pushReplacementNamed(context, MyRoutes.rAyuda);
+                  },
                 ),
                 ListTile(
                   leading: const Icon(
@@ -165,7 +167,9 @@ class customDrawerW extends StatelessWidget {
                     'Informacion',
                     style: styleListTile(),
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pushReplacementNamed(context, MyRoutes.rInfo);
+                  },
                 ),
                 ListTile(
                   leading: const Icon(

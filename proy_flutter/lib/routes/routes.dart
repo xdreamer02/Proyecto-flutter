@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:proy_flutter/main.dart';
+import 'package:proy_flutter/views/Ayuda.dart';
 import 'package:proy_flutter/views/index.dart';
+import 'package:proy_flutter/views/informaci%C3%B3n.dart';
 
 class MyRoutes {
   static const String rHome = '/home';
@@ -13,6 +15,8 @@ class MyRoutes {
   static const String rDetalles = '/details';
   static const String rSplash = '/splash';
   static const String rEditProfile = '/edit-profile';
+  static const String rAyuda = '/ayuda';
+   static const String rInfo = '/informacion';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -36,6 +40,12 @@ class MyRoutes {
 
       case ('/edit-profile'):
         return MaterialPageRoute(builder: (_) => const EditProfileScreen());
+
+         case ('/ayuda'):
+       return MaterialPageRoute(builder: (_) => const AyudaApp());
+
+        case ('/informacion'):
+       return MaterialPageRoute(builder: (_) => const InfoApp());
 
       default:
         return MaterialPageRoute(builder: (_) => const HomePage());
