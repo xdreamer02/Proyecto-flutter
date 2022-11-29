@@ -79,7 +79,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       suffixIcon: IconButton(
                           onPressed: () {
                             provider.image = '';
-                            Preferences.image = '';
                             _controller.clear();
                           },
                           icon: const Icon(Icons.clear)),
@@ -204,9 +203,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 final message = await service.edit(
                                     email: Preferences.email,
                                     country: Preferences.country,
-                                    image: Preferences.image,
+                                    image: provider.image,
                                     name: Preferences.name,
-                                    profession: provider.profession);
+                                    profession: Preferences.profession);
 
                                 if (message == null) {
                                   MsgAuth.verSnackbarStateColor(
@@ -214,11 +213,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                           'No fue posible actualizar sus datos',
                                       color: Colors.red);
                                 } else {
-                                  Preferences.name = provider.name;
-                                  Preferences.country = provider.country;
-                                  Preferences.profession = provider.profession;
                                   Preferences.image = provider.image;
-
                                   MsgAuth.verSnackbarStateColor(msg: message);
                                 }
 
