@@ -30,33 +30,36 @@ class customDrawerW extends StatelessWidget {
                     bottomLeft: Radius.circular(25)),
               ),
               child: Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    AvatarSmartWidget(
-                        image: Preferences.image,
-                        text: Preferences.initialCharacters,
-                        radius: 48),
-                    const SizedBox(
-                      width: 40,
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          Preferences.name,
-                          style: const TextStyle(
-                              fontSize: 26, color: Colors.white),
-                        ),
-                        Text(
-                          Preferences.emailShort,
-                          style: const TextStyle(
-                              fontSize: 26, color: Colors.white),
-                        ),
-                      ],
-                    ),
-                  ],
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      AvatarSmartWidget(
+                          image: Preferences.image,
+                          text: Preferences.initialCharacters,
+                          radius: 48),
+                      const SizedBox(
+                        width: 40,
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            Preferences.name,
+                            style: const TextStyle(
+                                fontSize: 26, color: Colors.white),
+                          ),
+                          Text(
+                            Preferences.emailShort,
+                            style: const TextStyle(
+                                fontSize: 26, color: Colors.white),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
