@@ -9,36 +9,37 @@ class InfoApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-         title: const Text('Información'),
+      appBar: AppBar(
+        title: const Text('Información'),
         centerTitle: true,
-        
       ),
-       body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children:[
-           SizedBox(
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          SizedBox(
             height: 10,
           ),
-          Text('Terminos y servicio'),
+          Text(
+            'Terminos y servicio',
+            style: _styleText(),
+          ),
           SizedBox(
             height: 20,
           ),
-          Text('Politica de privacidad'),
-            SizedBox(
+          Text('Politica de privacidad', style: _styleText()),
+          SizedBox(
             height: 20,
           ),
-          Text('DMCA'),
-            SizedBox(
+          Text('DMCA', style: _styleText()),
+          SizedBox(
             height: 20,
           ),
-          Text('Sobre la aplicación'),
-
-
-
-      ]
+          Text('Sobre la aplicación', style: _styleText()),
+        ]),
       ),
-        drawer: customDrawerW(),
+      drawer: customDrawerW(),
     );
   }
+
+  TextStyle _styleText() => TextStyle(fontSize: 20);
 }

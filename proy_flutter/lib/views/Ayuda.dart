@@ -9,26 +9,32 @@ class AyudaApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-          appBar: AppBar(
-         title: const Text('Ayuda'),
+      appBar: AppBar(
+        title: const Text('Ayuda'),
         centerTitle: true,
-        
       ),
-       body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children:[
-           SizedBox(
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          SizedBox(
             height: 10,
           ),
-          Text('Preguntas mas frecuentes'),
+          Text(
+            'Preguntas mas frecuentes',
+            style: _styleText(),
+          ),
           SizedBox(
             height: 20,
           ),
-          Text('Comentarios'),
-
-      ]
+          Text(
+            'Comentarios',
+            style: _styleText(),
+          ),
+        ]),
       ),
-        drawer: customDrawerW(),
+      drawer: customDrawerW(),
     );
   }
+
+  TextStyle _styleText() => TextStyle(fontSize: 20);
 }
