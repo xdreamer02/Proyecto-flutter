@@ -24,9 +24,7 @@ class _CatImagesState extends State<CatImages> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Detalle cat'),
-      ),
+      appBar: AppBar(),
       backgroundColor: Colors.black,
       body: Padding(
         padding: const EdgeInsets.all(8.0),
