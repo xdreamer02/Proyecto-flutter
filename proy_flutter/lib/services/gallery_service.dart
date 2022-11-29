@@ -17,7 +17,8 @@ class GalleryService extends ChangeNotifier {
     return 'La imagen fue subido correctamente';
   }
 
-  Future<String?> save(ImageModel imageModel) async {
+  Future<String?> save(
+      {required ImageModel imageModel, required String email}) async {
     final db = FirebaseFirestore.instance;
 
     final image = <String, dynamic>{
@@ -26,6 +27,7 @@ class GalleryService extends ChangeNotifier {
       "path": imageModel.path,
       "favorites": imageModel.favorites,
       "date": imageModel.date,
+      "email": email,
     };
 
     final doc = await db.collection("images").add(image);

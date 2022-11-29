@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
+import 'package:proy_flutter/preferences/preferences.dart';
 import 'package:proy_flutter/providers/login_provider.dart';
 import 'package:proy_flutter/routes/routes.dart';
 import 'package:proy_flutter/services/auth_service.dart';
+import 'package:proy_flutter/services/index.dart';
 
 class registerScreen extends StatelessWidget {
   const registerScreen({super.key});
@@ -165,6 +167,23 @@ class __formState extends State<_form> {
                                   loginProvider.email, loginProvider.password);
 
                           if (errorMessage == null) {
+                            Preferences.email = loginProvider.email;
+
+                            final profileService =
+                                // ignore: use_build_context_synchronously
+                                Provider.of<ProfileService>(context,
+                                    listen: false);
+
+                            final data = await profileService.loadData(
+                                email: loginProvider.email);
+
+                            if (data != null) {
+                              Preferences.name = data["name"];
+                              Preferences.profession = data["profession"];
+                              Preferences.image = data["image"];
+                              Preferences.country = data["country"];
+                            }
+
                             // ignore: use_build_context_synchronously
                             Navigator.pushReplacementNamed(
                                 context, MyRoutes.rHome);

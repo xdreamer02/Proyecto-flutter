@@ -8,7 +8,6 @@ import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:proy_flutter/models/image_model.dart';
 import 'package:proy_flutter/preferences/preferences.dart';
-import 'package:proy_flutter/providers/index.dart';
 import 'package:proy_flutter/services/index.dart';
 import 'package:proy_flutter/widgets/index.dart';
 import 'package:proy_flutter/widgets/utils.dart';
@@ -87,7 +86,8 @@ class _UploadScreenState extends State<UploadScreen> {
 
       String? response = await service.saveLocal(imageModel);
 
-      final id = await service.save(imageModel);
+      final id =
+          await service.save(imageModel: imageModel, email: Preferences.email);
 
       imageAppProvider.clear();
 

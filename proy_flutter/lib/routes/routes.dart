@@ -12,6 +12,7 @@ class MyRoutes {
   static const String rVerify = '/verify';
   static const String rDetalles = '/details';
   static const String rSplash = '/splash';
+  static const String rEditProfile = '/edit-profile';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -32,6 +33,9 @@ class MyRoutes {
 
       case ('/splash'):
         return MaterialPageRoute(builder: (_) => const SplashScreen());
+
+      case ('/edit-profile'):
+        return MaterialPageRoute(builder: (_) => const EditProfileScreen());
 
       default:
         return MaterialPageRoute(builder: (_) => const HomePage());

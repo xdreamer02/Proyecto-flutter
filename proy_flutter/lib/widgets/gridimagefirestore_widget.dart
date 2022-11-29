@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:proy_flutter/models/image_model.dart';
+import 'package:proy_flutter/preferences/preferences.dart';
 import 'package:proy_flutter/widgets/index.dart';
 
 class GridImageFirestoreWidget extends StatelessWidget {
@@ -12,7 +13,10 @@ class GridImageFirestoreWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-        stream: FirebaseFirestore.instance.collection('images').snapshots(),
+        stream: FirebaseFirestore.instance
+            .collection('images')
+            .where("email", isEqualTo: Preferences.email)
+            .snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return const Center(

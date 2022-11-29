@@ -4,6 +4,7 @@ import 'package:proy_flutter/preferences/preferences.dart';
 import 'package:proy_flutter/routes/routes.dart';
 import 'package:proy_flutter/views/config.dart';
 import 'package:proy_flutter/views/home.dart';
+import 'package:proy_flutter/widgets/index.dart';
 
 class customDrawerW extends StatelessWidget {
   const customDrawerW({
@@ -32,25 +33,26 @@ class customDrawerW extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const CircleAvatar(
-                      radius: 48, // Image radius
-                      backgroundImage: NetworkImage(
-                          'https://cdn.pixabay.com/photo/2014/11/29/19/33/bald-eagle-550804_960_720.jpg'),
-                    ),
+                    AvatarSmartWidget(
+                        image: Preferences.image,
+                        text: Preferences.initialCharacters,
+                        radius: 48),
                     const SizedBox(
                       width: 40,
                     ),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
+                      children: [
                         Text(
-                          'User',
-                          style: TextStyle(fontSize: 26, color: Colors.white),
+                          Preferences.name,
+                          style: const TextStyle(
+                              fontSize: 26, color: Colors.white),
                         ),
                         Text(
-                          'E-mail',
-                          style: TextStyle(fontSize: 26, color: Colors.white),
+                          Preferences.emailShort,
+                          style: const TextStyle(
+                              fontSize: 26, color: Colors.white),
                         ),
                       ],
                     ),

@@ -44,6 +44,7 @@ class _HomePageState extends State<HomePage>
           IconButton(
               onPressed: () {
                 authService.logout();
+                Preferences.logout();
                 Navigator.pushReplacementNamed(context, MyRoutes.rLogin);
               },
               icon: Icon(
@@ -52,7 +53,7 @@ class _HomePageState extends State<HomePage>
               ))
         ],
       ),
-      drawer: customDrawerW(),
+      drawer: const customDrawerW(),
       body: Column(
         children: [
           Material(

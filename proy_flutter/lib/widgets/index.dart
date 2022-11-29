@@ -1,3 +1,5 @@
+export 'package:proy_flutter/widgets/avatarsmart_widget.dart';
+export 'package:proy_flutter/widgets/avatardefault_widget.dart';
 export 'package:proy_flutter/widgets/listimagefirestore_widget.dart';
 export 'package:proy_flutter/widgets/imageloading_widget.dart';
 export 'package:proy_flutter/widgets/gridimagefirestore_widget.dart';

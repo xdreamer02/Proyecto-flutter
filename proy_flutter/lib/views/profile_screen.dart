@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:proy_flutter/models/image_model.dart';
 import 'package:proy_flutter/preferences/preferences.dart';
+import 'package:proy_flutter/routes/routes.dart';
 import 'package:proy_flutter/widgets/gridimage_widget.dart';
 import 'package:proy_flutter/widgets/index.dart';
 
@@ -77,6 +78,14 @@ class _ProfileScreenState extends State<ProfileScreen>
       appBar: AppBar(
         title: const Text('Perfil'),
         centerTitle: true,
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.pushNamedAndRemoveUntil(
+                    context, MyRoutes.rEditProfile, (route) => false);
+              },
+              icon: const Icon(Icons.edit_note))
+        ],
       ),
       backgroundColor: Preferences.theme ? Colors.black54 : Colors.white,
       drawer: const customDrawerW(),
@@ -86,11 +95,14 @@ class _ProfileScreenState extends State<ProfileScreen>
           SizedBox(
             height: 320,
             child: Stack(alignment: Alignment.topCenter, children: [
-              SizedBox(
+              const SizedBox(
                 height: 180,
                 width: double.infinity,
-                child: Image.network(
-                  'https://picsum.photos/200/300/?blur',
+                child: FadeInImage(
+                  placeholder: AssetImage('assets/loading.gif'),
+                  image: NetworkImage(
+                    'https://picsum.photos/200/300/?blur',
+                  ),
                   fit: BoxFit.fill,
                 ),
               ),
@@ -100,16 +112,17 @@ class _ProfileScreenState extends State<ProfileScreen>
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Container(
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(color: Colors.white, width: 8)),
-                      child: const CircleAvatar(
+                        decoration: BoxDecoration(
+                            color: Colors.black54,
+                            shape: BoxShape.circle,
+                            border: Border.all(color: Colors.white, width: 8)),
+                        child: AvatarSmartWidget(
+                          image: Preferences.image,
                           radius: 50,
-                          backgroundImage: NetworkImage(
-                              'https://cdn.pixabay.com/photo/2016/11/21/12/42/beard-1845166_960_720.jpg')),
-                    ),
+                          text: Preferences.initialCharacters,
+                        )),
                     Text(
-                      'Chris Yovanka',
+                      Preferences.name,
                       style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
@@ -119,7 +132,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                     Padding(
                       padding: const EdgeInsets.only(bottom: 5),
                       child: Text(
-                        'Designer | Photographer',
+                        Preferences.profession,
                         style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -131,15 +144,17 @@ class _ProfileScreenState extends State<ProfileScreen>
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(
-                          Icons.location_on,
-                          color: Preferences.theme
-                              ? Colors.white70
-                              : Colors.black45,
-                          size: 18,
-                        ),
+                        Preferences.country == ''
+                            ? const Text('')
+                            : Icon(
+                                Icons.location_on,
+                                color: Preferences.theme
+                                    ? Colors.white70
+                                    : Colors.black45,
+                                size: 18,
+                              ),
                         Text(
-                          'Lima, Perú',
+                          Preferences.country,
                           style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,

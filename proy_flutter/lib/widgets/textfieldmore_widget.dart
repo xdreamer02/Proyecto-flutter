@@ -10,7 +10,6 @@ class TextFieldWidget extends StatelessWidget {
   final String? Function(String?)? validator;
   final String? initialValue;
   final Widget? suffixIcon;
-  final TextEditingController? controller;
 
   const TextFieldWidget({
     Key? key,
@@ -21,14 +20,12 @@ class TextFieldWidget extends StatelessWidget {
     this.validator,
     this.initialValue = '',
     this.suffixIcon,
-    this.controller,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       initialValue: initialValue,
-      controller: controller,
       maxLines: maxLines ?? 1,
       onChanged: ((value) => onChanged!(value)),
       validator: (value) => validator!(value),

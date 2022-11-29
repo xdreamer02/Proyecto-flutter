@@ -7,6 +7,7 @@ import 'package:proy_flutter/preferences/preferences.dart';
 import 'package:proy_flutter/providers/index.dart';
 import 'package:proy_flutter/routes/routes.dart';
 import 'package:proy_flutter/services/index.dart';
+import 'package:proy_flutter/services/profile_service.dart';
 import 'package:proy_flutter/views/index.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
@@ -26,6 +27,8 @@ void main() async {
       ChangeNotifierProvider(create: (_) => AuthService()),
       ChangeNotifierProvider(create: (_) => ImageAppProvider()),
       ChangeNotifierProvider(create: (_) => GalleryService()),
+      ChangeNotifierProvider(create: (_) => ProfileProvider()),
+      ChangeNotifierProvider(create: (_) => ProfileService()),
     ],
     child: const MyApp(),
   ));
